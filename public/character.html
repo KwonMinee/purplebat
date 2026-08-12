@@ -83,13 +83,66 @@
         </form>
       </details>
 
-      <details>
+      <details id="newPostDetails">
         <summary style="cursor:pointer;font-weight:700;font-size:13px;color:var(--text-dark);">📝 새 글 작성</summary>
-        <form id="newPostForm" class="admin-inline-form" style="margin-top:12px;">
-          <div class="field" style="flex:1 1 100%;">제목<input type="text" name="title" required style="width:100%;" /></div>
-          <div class="field" style="flex:1 1 100%;">내용<textarea name="content" class="form-textarea" required style="width:100%;"></textarea></div>
-          <div class="field">작성자<input type="text" name="author" placeholder="운영팀" /></div>
-          <button type="submit" class="btn btn-primary">게시하기</button>
+        <form id="newPostForm" class="write-form" style="margin-top:12px;">
+          <input type="hidden" id="editingPostId" value="" />
+          <div class="write-field-row">
+            <input type="text" name="title" id="postTitleInput" placeholder="제목을 입력하세요" required class="write-title-input" style="border-bottom:2px solid var(--border);font-size:18px;padding:8px 4px;" />
+          </div>
+          <div class="write-field-row">
+            <input type="text" name="author" id="postAuthorInput" class="write-author-input" placeholder="작성자 (비워두면 '운영팀')" />
+          </div>
+
+          <div class="rt-root" id="charPostEditorRoot">
+            <div class="rt-toolbar editor-toolbar">
+              <button type="button" data-cmd="bold" title="굵게"><b>B</b></button>
+              <button type="button" data-cmd="italic" title="기울임"><i>I</i></button>
+              <button type="button" data-cmd="underline" title="밑줄"><u>U</u></button>
+              <button type="button" data-cmd="strikeThrough" title="취소선"><s>S</s></button>
+              <span class="toolbar-divider"></span>
+              <select class="rt-font-family" title="글꼴">
+                <option value="">글꼴 선택</option>
+                <option value="'Manrope', sans-serif">Manrope</option>
+                <option value="'Bricolage Grotesque', sans-serif">Bricolage</option>
+                <option value="'Cormorant Garamond', serif">Cormorant</option>
+                <option value="Georgia, serif">Georgia</option>
+                <option value="Arial, sans-serif">Arial</option>
+                <option value="'Courier New', monospace">Courier</option>
+              </select>
+              <select class="rt-font-size" title="글자 크기">
+                <option value="">크기 선택</option>
+                <option value="13px">작게</option>
+                <option value="16px">보통</option>
+                <option value="20px">크게</option>
+                <option value="28px">아주 크게</option>
+              </select>
+              <input type="color" class="rt-color" title="글자 색" value="#2b2130" />
+              <span class="toolbar-divider"></span>
+              <button type="button" data-cmd="justifyLeft" title="왼쪽 정렬">≡⬅</button>
+              <button type="button" data-cmd="justifyCenter" title="가운데 정렬">≡↔</button>
+              <button type="button" data-cmd="justifyRight" title="오른쪽 정렬">≡➡</button>
+              <span class="toolbar-divider"></span>
+              <button type="button" data-cmd="insertUnorderedList" title="글머리 목록">• 목록</button>
+              <button type="button" data-cmd="insertOrderedList" title="번호 목록">1. 목록</button>
+              <button type="button" data-cmd="formatBlockQuote" title="인용구">❝인용❞</button>
+              <button type="button" data-cmd="insertHorizontalRule" title="구분선">―구분선</button>
+              <span class="toolbar-divider"></span>
+              <button type="button" class="rt-insert-link" title="링크 삽입">🔗 링크</button>
+              <button type="button" class="rt-insert-image" title="사진 삽입">🖼️ 사진</button>
+              <button type="button" class="rt-insert-video" title="영상 삽입">🎬 영상</button>
+              <span class="toolbar-divider"></span>
+              <button type="button" data-cmd="undo" title="실행 취소">↶</button>
+              <button type="button" data-cmd="redo" title="다시 실행">↷</button>
+            </div>
+            <input type="file" class="rt-image-input" accept="image/*" style="display:none;" />
+            <div class="rt-body editor-body" contenteditable="true" data-placeholder="이야기를 자유롭게 적어보세요... 사진, 링크, 영상도 툴바에서 넣을 수 있어요."></div>
+          </div>
+
+          <div class="write-footer-actions">
+            <button type="button" class="btn-outline" id="cancelPostEditBtn" style="display:none;">취소</button>
+            <button type="submit" class="btn btn-primary" id="postSubmitBtn">게시하기</button>
+          </div>
         </form>
       </details>
     </div>
@@ -137,8 +190,11 @@
     <button class="modal-close" id="modalCloseBtn" aria-label="닫기">✕</button>
     <h3 id="modalTitle"></h3>
     <div class="modal-meta"><span id="modalAuthor"></span><span id="modalDate"></span><span id="modalViews"></span></div>
-    <div class="modal-body-text" id="modalContent"></div>
-    <button class="btn-danger" id="modalDeleteBtn" style="display:none;align-self:flex-start;">🗑️ 이 글 삭제</button>
+    <div class="modal-body-text post-content" id="modalContent"></div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn-outline" id="modalEditBtn" style="display:none;">✏️ 수정</button>
+      <button class="btn-danger" id="modalDeleteBtn" style="display:none;">🗑️ 이 글 삭제</button>
+    </div>
   </div>
 </div>
 
@@ -146,6 +202,7 @@
 
 <script src="js/api.js"></script>
 <script src="js/script.js"></script>
+<script src="js/rich-editor.js"></script>
 <script src="js/character.js"></script>
 </body>
 </html>

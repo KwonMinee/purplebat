@@ -19,6 +19,7 @@ function escapeHtmlChar(str) {
 
 let currentCharacterId = null;
 let isAdminUser = false;
+let charPostEditor = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
   currentCharacterId = getCharacterId();
@@ -35,6 +36,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (postList) postList.innerHTML = "";
     return;
   }
+
+  const editorRoot = document.getElementById("charPostEditorRoot");
+  if (editorRoot && window.initRichEditor) charPostEditor = initRichEditor(editorRoot);
 
   await checkAdminStatus();
   await loadCharacter();
@@ -129,11 +133,12 @@ async function openPost(postId) {
     const post = await API.get(`/api/characters/${encodeURIComponent(currentCharacterId)}/posts/${encodeURIComponent(postId)}`);
     document.getElementById("modalTitle").textContent = post.title;
     document.getElementById("modalAuthor").textContent = post.author;
-    document.getElementById("modalDate").textContent = post.date;
+    document.getElementById("modalDate").textContent = post.updatedAt ? `${post.date} (수정됨 ${post.updatedAt})` : post.date;
     document.getElementById("modalViews").textContent = `조회 ${post.views ?? 0}`;
-    document.getElementById("modalContent").textContent = post.content;
+    document.getElementById("modalContent").innerHTML = post.content && post.content.trim() ? post.content : "<p>내용이 없습니다.</p>";
 
     const deleteBtn = document.getElementById("modalDeleteBtn");
+    const editBtn = document.getElementById("modalEditBtn");
     if (isAdminUser) {
       deleteBtn.style.display = "inline-flex";
       deleteBtn.onclick = async () => {
@@ -146,14 +151,48 @@ async function openPost(postId) {
           alert(err.message || "삭제에 실패했습니다.");
         }
       };
+
+      editBtn.style.display = "inline-flex";
+      editBtn.onclick = () => {
+        closeModal();
+        startEditPost(post);
+      };
     } else {
       deleteBtn.style.display = "none";
+      editBtn.style.display = "none";
     }
 
     document.getElementById("postModal").classList.add("show");
   } catch (e) {
     alert(e.message || "게시글을 불러오지 못했습니다.");
   }
+}
+
+function startEditPost(post) {
+  const details = document.getElementById("newPostDetails");
+  const form = document.getElementById("newPostForm");
+  if (!details || !form) return;
+
+  details.open = true;
+  document.getElementById("editingPostId").value = post.id;
+  document.getElementById("postTitleInput").value = post.title || "";
+  document.getElementById("postAuthorInput").value = post.author || "";
+  if (charPostEditor) charPostEditor.setHTML(post.content || "");
+
+  document.getElementById("postSubmitBtn").textContent = "수정 완료";
+  document.getElementById("cancelPostEditBtn").style.display = "";
+
+  details.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function resetPostForm() {
+  const form = document.getElementById("newPostForm");
+  if (!form) return;
+  form.reset();
+  document.getElementById("editingPostId").value = "";
+  if (charPostEditor) charPostEditor.setHTML("");
+  document.getElementById("postSubmitBtn").textContent = "게시하기";
+  document.getElementById("cancelPostEditBtn").style.display = "none";
 }
 
 function closeModal() {
@@ -207,18 +246,37 @@ function bindAdminForms() {
   }
 
   if (postForm) {
+    const cancelBtn = document.getElementById("cancelPostEditBtn");
+    if (cancelBtn) cancelBtn.addEventListener("click", resetPostForm);
+
     postForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const fd = new FormData(postForm);
+      const editingId = document.getElementById("editingPostId").value;
       const payload = {
         title: fd.get("title"),
-        content: fd.get("content"),
+        content: charPostEditor ? charPostEditor.getHTML() : "",
         author: fd.get("author") || "운영팀",
       };
+
+      if (!payload.title || !payload.title.trim()) {
+        showCharToast("제목을 입력해주세요.");
+        return;
+      }
+      if (charPostEditor && charPostEditor.isEmpty()) {
+        showCharToast("내용을 입력해주세요.");
+        return;
+      }
+
       try {
-        await API.post(`/api/characters/${encodeURIComponent(currentCharacterId)}/posts`, payload);
-        postForm.reset();
-        showCharToast("새 글이 등록되었습니다!");
+        if (editingId) {
+          await API.put(`/api/characters/${encodeURIComponent(currentCharacterId)}/posts/${encodeURIComponent(editingId)}`, payload);
+          showCharToast("글이 수정되었습니다!");
+        } else {
+          await API.post(`/api/characters/${encodeURIComponent(currentCharacterId)}/posts`, payload);
+          showCharToast("새 글이 등록되었습니다!");
+        }
+        resetPostForm();
         await loadPosts();
       } catch (err) {
         showCharToast(err.message || "글 등록에 실패했습니다.");

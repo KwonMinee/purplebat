@@ -1747,6 +1747,12 @@ a {
   white-space: pre-wrap;
 }
 
+/* 캐릭터 방 게시글은 이제 리치 텍스트(HTML)로 저장되므로,
+   줄바꿈 그대로 보존(pre-wrap)하지 않고 일반 HTML처럼 렌더링합니다. */
+.modal-body-text.post-content {
+  white-space: normal;
+}
+
 /* ---------- 게시판 글 클릭 링크 / 블로그 게시글 상세 (post.html) ---------- */
 
 a.board-row {

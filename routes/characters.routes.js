@@ -7,6 +7,7 @@
 const express = require("express");
 const store = require("../lib/jsonStore");
 const requireAdmin = require("../middleware/requireAdmin");
+const { sanitizeContent, makeExcerpt, MAX_CONTENT_LENGTH } = require("../lib/contentSanitizer");
 
 const router = express.Router();
 
@@ -110,20 +111,57 @@ router.post("/:id/posts", requireAdmin, async (req, res) => {
     const { title, content, author } = req.body || {};
     if (!title || !title.trim()) return res.status(400).json({ error: "제목을 입력해주세요." });
     if (!content || !content.trim()) return res.status(400).json({ error: "내용을 입력해주세요." });
+    if (String(content).length > MAX_CONTENT_LENGTH) {
+      return res.status(400).json({ error: "내용이 너무 깁니다. 이미지 용량을 줄이거나 나눠서 작성해주세요." });
+    }
 
+    const cleanContent = sanitizeContent(content);
     const posts = await store.read("characterPosts");
     const entry = {
       id: store.makeId(),
       characterId: req.params.id,
       title: title.trim().slice(0, 120),
-      content: content.trim().slice(0, 3000),
+      content: cleanContent,
+      excerpt: makeExcerpt(cleanContent),
       author: (author || "운영팀").trim().slice(0, 30) || "운영팀",
       date: today(),
+      updatedAt: null,
       views: 0,
     };
     posts.unshift(entry);
     await store.write("characterPosts", posts);
     res.json(entry);
+  } catch (err) {
+    res.status(500).json({ error: "데이터베이스 연결에 실패했습니다.", detail: err.message });
+  }
+});
+
+// ---- 캐릭터 게시글 수정 (관리자 전용) ----
+router.put("/:id/posts/:postId", requireAdmin, async (req, res) => {
+  try {
+    const posts = await store.read("characterPosts");
+    const idx = posts.findIndex((p) => p.id === req.params.postId && p.characterId === req.params.id);
+    if (idx === -1) return res.status(404).json({ error: "게시글을 찾을 수 없습니다." });
+
+    const { title, content, author } = req.body || {};
+    if (title !== undefined) {
+      if (!title.trim()) return res.status(400).json({ error: "제목을 입력해주세요." });
+      posts[idx].title = title.trim().slice(0, 120);
+    }
+    if (author !== undefined) posts[idx].author = (author || "운영팀").trim().slice(0, 30) || "운영팀";
+    if (content !== undefined) {
+      if (!content.trim()) return res.status(400).json({ error: "내용을 입력해주세요." });
+      if (String(content).length > MAX_CONTENT_LENGTH) {
+        return res.status(400).json({ error: "내용이 너무 깁니다. 이미지 용량을 줄이거나 나눠서 작성해주세요." });
+      }
+      const cleanContent = sanitizeContent(content);
+      posts[idx].content = cleanContent;
+      posts[idx].excerpt = makeExcerpt(cleanContent);
+    }
+    posts[idx].updatedAt = today();
+
+    await store.write("characterPosts", posts);
+    res.json(posts[idx]);
   } catch (err) {
     res.status(500).json({ error: "데이터베이스 연결에 실패했습니다.", detail: err.message });
   }
