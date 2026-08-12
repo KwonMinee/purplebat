@@ -1,10 +1,1 @@
-[
-  { "id": "g1", "category": "badge", "name": "보라박쥐단 핀뱃지", "price": 6000, "image": "assets/goods-pin.png" },
-  { "id": "g2", "category": "badge", "name": "파티원 캐릭터 키링 (랜덤)", "price": 8000, "image": "assets/goods-pin.png" },
-  { "id": "g3", "category": "figure", "name": "아크릴 스탠드 세트", "price": 18000, "image": "assets/goods-stand.png" },
-  { "id": "g4", "category": "figure", "name": "미니 디오라마 피규어", "price": 32000, "image": "assets/goods-stand.png" },
-  { "id": "g5", "category": "stationery", "name": "모험 일지 노트", "price": 9000, "image": "assets/goods-notebook.png" },
-  { "id": "g6", "category": "stationery", "name": "캐릭터 스티커 팩", "price": 5000, "image": "assets/goods-notebook.png" },
-  { "id": "g7", "category": "living", "name": "보라박쥐단 머그컵", "price": 12000, "image": "assets/goods-mug.png" },
-  { "id": "g8", "category": "living", "name": "보라박쥐단 에코백", "price": 15000, "image": "assets/goods-mug.png" }
-]
+[]

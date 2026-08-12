@@ -6,7 +6,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "reset-example-data": "node scripts/reset-example-data.js"
   },
   "engines": {
     "node": ">=16.0.0"
