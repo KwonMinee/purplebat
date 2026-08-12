@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>글쓰기 | 보라박쥐단 관리자</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+<div class="admin-shell">
+  <div class="admin-topbar">
+    <div class="admin-topbar-brand">🦇 보라박쥐단 글쓰기</div>
+    <div class="admin-topbar-actions">
+      <a href="admin.html" class="link-more">← 대시보드로</a>
+    </div>
+  </div>
+
+  <div class="admin-body">
+    <form class="write-form" id="writeForm">
+      <input type="hidden" id="postId" value="" />
+
+      <div class="write-field-row">
+        <select class="write-category-select" id="writeCategory">
+          <option value="notice">공지</option>
+          <option value="free">자유게시판</option>
+          <option value="qna">질문게시판</option>
+          <option value="cert">인증게시판</option>
+        </select>
+        <input type="text" class="write-author-input" id="writeAuthor" placeholder="작성자 (비워두면 '운영팀')" />
+      </div>
+
+      <input type="text" class="write-title-input" id="writeTitle" placeholder="제목을 입력하세요" required />
+
+      <div class="editor-toolbar" id="editorToolbar">
+        <button type="button" data-cmd="bold" title="굵게"><b>B</b></button>
+        <button type="button" data-cmd="italic" title="기울임"><i>I</i></button>
+        <button type="button" data-cmd="underline" title="밑줄"><u>U</u></button>
+        <button type="button" data-cmd="strikeThrough" title="취소선"><s>S</s></button>
+        <span class="toolbar-divider"></span>
+        <select id="fontFamilySelect" title="글꼴">
+          <option value="">글꼴 선택</option>
+          <option value="'Manrope', sans-serif">Manrope</option>
+          <option value="'Bricolage Grotesque', sans-serif">Bricolage</option>
+          <option value="'Cormorant Garamond', serif">Cormorant</option>
+          <option value="Georgia, serif">Georgia</option>
+          <option value="Arial, sans-serif">Arial</option>
+          <option value="'Courier New', monospace">Courier</option>
+        </select>
+        <select id="fontSizeSelect" title="글자 크기">
+          <option value="">크기 선택</option>
+          <option value="13px">작게</option>
+          <option value="16px">보통</option>
+          <option value="20px">크게</option>
+          <option value="28px">아주 크게</option>
+        </select>
+        <input type="color" id="textColorInput" title="글자 색" value="#2b2130" />
+        <span class="toolbar-divider"></span>
+        <button type="button" data-cmd="justifyLeft" title="왼쪽 정렬">≡⬅</button>
+        <button type="button" data-cmd="justifyCenter" title="가운데 정렬">≡↔</button>
+        <button type="button" data-cmd="justifyRight" title="오른쪽 정렬">≡➡</button>
+        <span class="toolbar-divider"></span>
+        <button type="button" data-cmd="insertUnorderedList" title="글머리 목록">• 목록</button>
+        <button type="button" data-cmd="insertOrderedList" title="번호 목록">1. 목록</button>
+        <button type="button" data-cmd="formatBlockQuote" title="인용구">❝인용❞</button>
+        <button type="button" data-cmd="insertHorizontalRule" title="구분선">―구분선</button>
+        <span class="toolbar-divider"></span>
+        <button type="button" id="insertLinkBtn" title="링크 삽입">🔗 링크</button>
+        <button type="button" id="insertImageBtn" title="사진 삽입">🖼️ 사진</button>
+        <button type="button" id="insertVideoBtn" title="영상 삽입">🎬 영상</button>
+        <span class="toolbar-divider"></span>
+        <button type="button" data-cmd="undo" title="실행 취소">↶</button>
+        <button type="button" data-cmd="redo" title="다시 실행">↷</button>
+      </div>
+      <input type="file" id="imageFileInput" accept="image/*" style="display:none;" />
+
+      <div class="editor-body" id="editorBody" contenteditable="true" data-placeholder="이야기를 자유롭게 적어보세요... 사진, 링크, 영상도 툴바에서 넣을 수 있어요."></div>
+
+      <div class="write-footer-actions">
+        <span class="write-hint" id="writeHint"></span>
+        <a href="admin.html" class="btn-outline">취소</a>
+        <button type="submit" class="btn btn-primary" id="writeSubmitBtn">발행하기</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="js/api.js"></script>
+<script src="js/admin-write.js"></script>
+</body>
+</html>

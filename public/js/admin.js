@@ -140,7 +140,6 @@ async function initDashboardPage() {
   bindAdminForm("form-notices", "/api/admin/notices", loadAll);
   bindAdminForm("form-archive", "/api/admin/archive", loadAll);
   bindAdminForm("form-goods", "/api/admin/goods", loadAll);
-  bindAdminForm("form-board", "/api/admin/board", loadAll);
   bindMinigameForm();
 
   await loadAll();
@@ -329,7 +328,10 @@ async function loadBoard() {
         <td>${escapeHtmlAdmin(b.title)}</td>
         <td>${escapeHtmlAdmin(b.author)}</td>
         <td>${escapeHtmlAdmin(b.date)}</td>
-        <td><button class="btn-danger" data-id="${escapeHtmlAdmin(b.id)}">삭제</button></td>
+        <td>
+          <a class="btn-outline" href="admin-write.html?id=${escapeHtmlAdmin(b.id)}">수정</a>
+          <button class="btn-danger" data-id="${escapeHtmlAdmin(b.id)}">삭제</button>
+        </td>
       </tr>`
         )
         .join("") || `<tr><td colspan="5" class="admin-empty">등록된 게시글이 없습니다.</td></tr>`;

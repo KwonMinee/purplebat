@@ -95,4 +95,19 @@ router.get("/board", async (req, res) => {
   }
 });
 
+// 게시글 상세 (조회수 +1). 로그인 없이 누구나 볼 수 있어야 공유 링크가 동작합니다.
+router.get("/board/:id", async (req, res) => {
+  try {
+    const list = await store.read("board");
+    const idx = list.findIndex((p) => p.id === req.params.id);
+    if (idx === -1) return res.status(404).json({ error: "게시글을 찾을 수 없습니다." });
+
+    list[idx].views = (list[idx].views || 0) + 1;
+    await store.write("board", list);
+    res.json(list[idx]);
+  } catch (err) {
+    res.status(500).json({ error: "데이터베이스 연결에 실패했습니다.", detail: err.message });
+  }
+});
+
 module.exports = router;

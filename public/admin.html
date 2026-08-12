@@ -113,19 +113,8 @@
     <!-- 게시판 -->
     <section class="admin-section" id="panel-board">
       <h2>게시판 관리</h2>
-      <form class="admin-inline-form" id="form-board">
-        <div class="field">게시판
-          <select name="category">
-            <option value="notice">공지</option>
-            <option value="free">자유</option>
-            <option value="qna">질문</option>
-            <option value="cert">인증</option>
-          </select>
-        </div>
-        <div class="field">제목<input type="text" name="title" placeholder="게시글 제목" required /></div>
-        <div class="field">작성자<input type="text" name="author" placeholder="운영팀" /></div>
-        <button type="submit" class="btn btn-primary">추가</button>
-      </form>
+      <p class="admin-hint" style="text-align:left;">사진·링크·영상을 넣을 수 있는 전용 글쓰기 화면에서 작성합니다.</p>
+      <a href="admin-write.html" class="btn btn-primary" style="display:inline-flex;width:fit-content;">✍️ 새 글 쓰기</a>
       <table class="admin-table">
         <thead><tr><th>게시판</th><th>제목</th><th>작성자</th><th>날짜</th><th></th></tr></thead>
         <tbody id="table-board"></tbody>

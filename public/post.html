@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>게시글 | 보라박쥐단</title>
+<meta name="description" content="보라박쥐단 커뮤니티 게시글" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-badge">🦇</span>
+      <span class="brand-text">
+        <span class="brand-title">보라박쥐단</span>
+        <span class="brand-subtitle">ADVENTURE ARCHIVE</span>
+      </span>
+    </a>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html" class="nav-link">홈</a>
+      <a href="party.html" class="nav-link">파티원</a>
+      <a href="archive.html" class="nav-link">아카이브</a>
+      <a href="minigame.html" class="nav-link">미니게임</a>
+      <a href="goods.html" class="nav-link">굿즈샵</a>
+      <a href="community.html" class="nav-link active">커뮤니티</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" aria-label="검색" id="searchBtn">
+        <span class="icon" style="width:20px;height:20px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+      </button>
+      <button class="icon-btn" aria-label="장바구니" id="cartBtn">
+        <span class="icon" style="width:20px;height:20px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></span>
+      </button>
+      <button class="avatar-btn" aria-label="내 계정"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span></button>
+      <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="page-body">
+    <div class="breadcrumb">
+      <a href="index.html">홈</a><span>/</span><a href="community.html">커뮤니티</a><span>/</span><span class="current" id="breadcrumbTitle">게시글</span>
+    </div>
+
+    <article class="post-view">
+      <span class="tag" id="postCategoryTag" style="background:var(--purple-soft);color:var(--purple);width:fit-content;"></span>
+      <h1 id="postTitle">불러오는 중...</h1>
+      <div class="post-view-meta">
+        <span id="postAuthor"></span>
+        <span id="postDate"></span>
+        <span id="postViews"></span>
+        <button type="button" class="btn-outline" id="shareBtn">🔗 공유하기</button>
+      </div>
+
+      <div class="admin-tools-panel" id="postAdminTools" style="display:none;">
+        <a class="btn-outline" id="editPostBtn" href="#">✏️ 수정하기</a>
+        <button type="button" class="btn-danger" id="deletePostBtn">🗑️ 삭제하기</button>
+      </div>
+
+      <hr class="rpg-divider" />
+
+      <div class="post-content" id="postContent">불러오는 중...</div>
+    </article>
+
+    <div class="post-view-footer">
+      <a href="community.html" class="btn-outline">← 목록으로</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="assets/logo-hero.png" alt="보라박쥐단 로고" />
+        <div class="footer-brand-text">
+          <span class="title">보라박쥐단</span>
+          <span class="subtitle">ADVENTURE ARCHIVE</span>
+        </div>
+      </div>
+      <div class="social-links">
+        <a href="#" class="social-btn" aria-label="닫기"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span></a>
+        <a href="#" class="social-btn" aria-label="유튜브"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg></span></a>
+        <a href="#" class="social-btn" aria-label="트위터"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg></span></a>
+        <a href="#" class="social-btn" aria-label="인스타그램"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></svg></span></a>
+      </div>
+    </div>
+    <hr class="footer-divider" />
+    <div class="footer-bottom">
+      <span class="copyright">© 2025 보라박쥐단 Adventure Archive. All rights reserved.</span>
+      <div class="footer-links"><span>이용약관</span><span>개인정보처리방침</span><a href="admin-login.html" style="opacity:0.5;">관리자</a></div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+<script src="js/api.js"></script>
+<script src="js/script.js"></script>
+<script src="js/post.js"></script>
+</body>
+</html>

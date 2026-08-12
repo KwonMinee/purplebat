@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initCartButtons();
   initPartyButtons();
   initLoadMoreButtons();
+  initCommunityWriteButton();
   hydrateFromServer();
 });
 
@@ -495,12 +496,24 @@ function boardRowHtml(post) {
   const labelMap = { notice: "공지", free: "잡담", qna: "질문", cert: "인증" };
   const tagAttr = tagStyleMap[post.category] || "";
   return `
-    <div class="board-row" data-id="${escapeHtml(post.id)}">
+    <a class="board-row" href="post.html?id=${encodeURIComponent(post.id)}" data-id="${escapeHtml(post.id)}">
       <span class="tag" ${tagAttr}>${escapeHtml(labelMap[post.category] || post.category)}</span>
       <span class="board-title">${escapeHtml(post.title)}</span>
       <span class="board-meta"><span>${escapeHtml(post.author)}</span><span>조회 ${post.views ?? 0}</span><span>${escapeHtml(post.date)}</span></span>
-    </div>
+    </a>
   `;
+}
+
+/* ---------- 커뮤니티 페이지: 관리자로 로그인되어 있으면 "새 글 쓰기" 버튼 표시 ---------- */
+async function initCommunityWriteButton() {
+  const btn = document.getElementById("writePostBtn");
+  if (!btn || !window.API) return;
+  try {
+    const status = await API.get("/api/auth/status");
+    if (status.loggedIn) btn.style.display = "";
+  } catch (e) {
+    /* 비로그인/서버 미실행: 버튼 숨김 유지 */
+  }
 }
 
 async function renderBoards() {

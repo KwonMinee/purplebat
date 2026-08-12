@@ -17,6 +17,37 @@ function today() {
   ).padStart(2, "0")}`;
 }
 
+// ============================================================
+// 블로그 글쓰기 에디터에서 저장되는 HTML을 가볍게 청소합니다.
+// (관리자 1인만 글을 쓸 수 있는 구조라 완벽한 보안 파서까지는 아니지만,
+//  스크립트 실행/이벤트 핸들러 삽입 같은 위험 요소는 걸러냅니다.
+//  <iframe>은 우리 에디터가 만드는 유튜브/비메오 임베드만 허용합니다.)
+// ============================================================
+function sanitizeContent(html) {
+  if (typeof html !== "string") return "";
+  let out = html;
+  out = out.replace(/<script[\s\S]*?<\/script>/gi, "");
+  out = out.replace(/<style[\s\S]*?<\/style>/gi, "");
+  out = out.replace(/<(object|embed|link|meta|base|form)\b[^>]*>/gi, "");
+  out = out.replace(/<iframe\b[^>]*>[\s\S]*?<\/iframe>/gi, (tag) => {
+    const srcMatch = tag.match(/src=["']([^"']+)["']/i);
+    const src = srcMatch ? srcMatch[1] : "";
+    const allowed = /^https:\/\/(www\.youtube\.com\/embed\/|player\.vimeo\.com\/video\/)/i;
+    return allowed.test(src) ? tag : "";
+  });
+  out = out.replace(/\son\w+=("[^"]*"|'[^']*'|[^\s>]+)/gi, "");
+  out = out.replace(/(href|src)\s*=\s*(["'])\s*javascript:[^"']*\2/gi, "$1=$2#$2");
+  return out;
+}
+
+function makeExcerpt(html) {
+  const text = String(html || "")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return text.slice(0, 140);
+}
+
 // 대시보드 요약 통계
 router.get("/stats", async (req, res) => {
   try {
@@ -218,26 +249,79 @@ router.delete("/guestbook/:id", async (req, res) => {
   }
 });
 
-// ---- 게시판 ----
+// ---- 게시판 (블로그형 글쓰기) ----
+const BOARD_CATEGORIES = ["notice", "free", "qna", "cert"];
+const MAX_CONTENT_LENGTH = 3000000; // 약 3MB. 이미지를 base64로 본문에 직접 넣기 때문에 넉넉하게 잡았습니다.
+
+// 수정 화면에서 불러올 때 쓰는 상세 조회 (공개 GET /api/board/:id와 달리 조회수를 올리지 않습니다)
+router.get("/board/:id", async (req, res) => {
+  try {
+    const post = (await store.read("board")).find((p) => p.id === req.params.id);
+    if (!post) return res.status(404).json({ error: "게시글을 찾을 수 없습니다." });
+    res.json(post);
+  } catch (err) {
+    res.status(500).json({ error: "데이터베이스 연결에 실패했습니다.", detail: err.message });
+  }
+});
+
 router.post("/board", async (req, res) => {
   try {
-    const { title, category, author } = req.body || {};
-    const allowed = ["notice", "free", "qna", "cert"];
+    const { title, category, author, content } = req.body || {};
     if (!title || !title.trim()) return res.status(400).json({ error: "제목을 입력해주세요." });
-    if (!allowed.includes(category)) return res.status(400).json({ error: "게시판을 선택해주세요." });
+    if (!BOARD_CATEGORIES.includes(category)) return res.status(400).json({ error: "게시판을 선택해주세요." });
+    if (content && String(content).length > MAX_CONTENT_LENGTH) {
+      return res.status(400).json({ error: "내용이 너무 깁니다. 이미지 용량을 줄이거나 나눠서 작성해주세요." });
+    }
 
+    const cleanContent = sanitizeContent(content || "");
     const list = await store.read("board");
     const entry = {
       id: store.makeId(),
       title: title.trim().slice(0, 120),
       category,
       author: (author || "운영팀").trim().slice(0, 30) || "운영팀",
+      content: cleanContent,
+      excerpt: makeExcerpt(cleanContent),
       date: today(),
+      updatedAt: null,
       views: 0,
     };
     list.unshift(entry);
     await store.write("board", list);
     res.json(entry);
+  } catch (err) {
+    res.status(500).json({ error: "데이터베이스 연결에 실패했습니다.", detail: err.message });
+  }
+});
+
+router.put("/board/:id", async (req, res) => {
+  try {
+    const list = await store.read("board");
+    const idx = list.findIndex((p) => p.id === req.params.id);
+    if (idx === -1) return res.status(404).json({ error: "게시글을 찾을 수 없습니다." });
+
+    const { title, category, author, content } = req.body || {};
+    if (title !== undefined) {
+      if (!title.trim()) return res.status(400).json({ error: "제목을 입력해주세요." });
+      list[idx].title = title.trim().slice(0, 120);
+    }
+    if (category !== undefined) {
+      if (!BOARD_CATEGORIES.includes(category)) return res.status(400).json({ error: "게시판이 올바르지 않습니다." });
+      list[idx].category = category;
+    }
+    if (author !== undefined) list[idx].author = (author || "운영팀").trim().slice(0, 30) || "운영팀";
+    if (content !== undefined) {
+      if (String(content).length > MAX_CONTENT_LENGTH) {
+        return res.status(400).json({ error: "내용이 너무 깁니다. 이미지 용량을 줄이거나 나눠서 작성해주세요." });
+      }
+      const cleanContent = sanitizeContent(content);
+      list[idx].content = cleanContent;
+      list[idx].excerpt = makeExcerpt(cleanContent);
+    }
+    list[idx].updatedAt = today();
+
+    await store.write("board", list);
+    res.json(list[idx]);
   } catch (err) {
     res.status(500).json({ error: "데이터베이스 연결에 실패했습니다.", detail: err.message });
   }

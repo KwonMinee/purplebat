@@ -191,7 +191,7 @@
 
 .admin-stats-row {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   gap: 16px;
 }
 
@@ -330,11 +330,163 @@
   font-size: 13px;
 }
 
+/* ---------- 블로그형 글쓰기 에디터 (admin-write.html) ---------- */
+
+.write-form {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.write-field-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.write-category-select,
+.write-author-input {
+  background: var(--surface-alt);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-family: var(--font-body);
+  font-size: 13px;
+}
+
+.write-author-input {
+  flex: 1;
+  min-width: 180px;
+}
+
+.write-title-input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid var(--border);
+  padding: 10px 4px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 24px;
+  color: var(--text-dark);
+  background: transparent;
+}
+.write-title-input:focus {
+  outline: none;
+  border-bottom-color: var(--purple);
+}
+
+.editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-alt);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 8px;
+  position: sticky;
+  top: 8px;
+  z-index: 5;
+}
+
+.editor-toolbar button {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-dark);
+  background: var(--surface);
+  border: 1.5px solid transparent;
+}
+.editor-toolbar button:hover {
+  border-color: var(--border);
+}
+
+.editor-toolbar select,
+.editor-toolbar input[type="color"] {
+  height: 32px;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  font-size: 12px;
+  padding: 0 6px;
+}
+
+.editor-toolbar input[type="color"] {
+  width: 36px;
+  padding: 2px;
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 22px;
+  background: var(--border);
+  margin: 0 2px;
+}
+
+.editor-body {
+  min-height: 360px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-dark);
+  background: var(--surface);
+}
+.editor-body:focus {
+  outline: none;
+  border-color: var(--purple);
+}
+.editor-body:empty:before {
+  content: attr(data-placeholder);
+  color: var(--text-muted);
+}
+.editor-body img {
+  max-width: 100%;
+  border-radius: 12px;
+  margin: 8px 0;
+}
+.editor-body blockquote {
+  border-left: 4px solid var(--purple);
+  background: var(--purple-soft);
+  padding: 10px 16px;
+  margin: 10px 0;
+  border-radius: 0 8px 8px 0;
+}
+.editor-body a {
+  color: var(--purple);
+  text-decoration: underline;
+}
+
+.write-footer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.write-hint {
+  margin-right: auto;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
 @media (max-width: 900px) {
   .admin-stats-row {
     grid-template-columns: repeat(2, 1fr);
   }
   .admin-body {
     padding: 20px;
+  }
+  .write-title-input {
+    font-size: 19px;
   }
 }
