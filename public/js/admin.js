@@ -138,7 +138,6 @@ async function initDashboardPage() {
   });
 
   bindAdminForm("form-notices", "/api/admin/notices", loadAll);
-  bindAdminForm("form-archive", "/api/admin/archive", loadAll);
   bindAdminForm("form-goods", "/api/admin/goods", loadAll);
   bindMinigameForm();
 

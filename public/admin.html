@@ -58,19 +58,8 @@
     <!-- 아카이브 -->
     <section class="admin-section" id="panel-archive">
       <h2>아카이브 관리</h2>
-      <form class="admin-inline-form" id="form-archive">
-        <div class="field">제목<input type="text" name="title" placeholder="기록 제목" required /></div>
-        <div class="field">카테고리
-          <select name="category">
-            <option value="photo">사진</option>
-            <option value="video">영상</option>
-            <option value="illustration">일러스트</option>
-            <option value="review">리뷰</option>
-          </select>
-        </div>
-        <div class="field">이미지 경로<input type="text" name="image" placeholder="assets/archive-1.png" /></div>
-        <button type="submit" class="btn btn-primary">추가</button>
-      </form>
+      <p class="admin-hint" style="text-align:left;">사진·링크·영상을 넣을 수 있는 블로그형 글쓰기 도구는 아카이브 페이지에 있습니다.</p>
+      <a href="archive.html" class="btn btn-primary" style="display:inline-flex;width:fit-content;">✍️ 새 기록 작성하러 가기</a>
       <table class="admin-table">
         <thead><tr><th>이미지</th><th>제목</th><th>카테고리</th><th>날짜</th><th></th></tr></thead>
         <tbody id="table-archive"></tbody>

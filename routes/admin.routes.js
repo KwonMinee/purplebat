@@ -71,25 +71,107 @@ router.delete("/notices/:id", async (req, res) => {
   }
 });
 
-// ---- 아카이브 ----
+// ---- 아카이브 (블로그형 글쓰기) ----
+const ARCHIVE_CATEGORIES = ["photo", "video", "illustration", "review"];
+const ARCHIVE_DEFAULT_IMAGE = {
+  photo: "assets/archive-1.png",
+  video: "assets/archive-2.png",
+  illustration: "assets/archive-3.png",
+  review: "assets/archive-4.png",
+};
+
+// 본문 HTML 안에 삽입된 첫 번째 사진을 대표 이미지로 자동 사용합니다.
+function extractFirstImage(html) {
+  const match = /<img[^>]+src=["']([^"']+)["']/i.exec(html || "");
+  return match ? match[1] : "";
+}
+
+// 텍스트도 사진/영상도 전혀 없는 빈 본문인지 확인합니다.
+function isArchiveContentEmpty(html) {
+  const text = (html || "").replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").trim();
+  if (text) return false;
+  if (/<img[\s>]/i.test(html || "") || /<iframe[\s>]/i.test(html || "")) return false;
+  return true;
+}
+
+// 수정 화면에서 불러올 때 쓰는 상세 조회 (공개 GET /api/archive/:id와 달리 조회수를 올리지 않습니다)
+router.get("/archive/:id", async (req, res) => {
+  try {
+    const item = (await store.read("archive")).find((a) => a.id === req.params.id);
+    if (!item) return res.status(404).json({ error: "기록을 찾을 수 없습니다." });
+    res.json(item);
+  } catch (err) {
+    res.status(500).json({ error: "데이터베이스 연결에 실패했습니다.", detail: err.message });
+  }
+});
+
 router.post("/archive", async (req, res) => {
   try {
-    const { title, category, image } = req.body || {};
-    const allowed = ["photo", "video", "illustration", "review"];
+    const { title, category, image, author, content } = req.body || {};
     if (!title || !title.trim()) return res.status(400).json({ error: "제목을 입력해주세요." });
-    if (!allowed.includes(category)) return res.status(400).json({ error: "카테고리가 올바르지 않습니다." });
+    if (!ARCHIVE_CATEGORIES.includes(category)) return res.status(400).json({ error: "카테고리가 올바르지 않습니다." });
+    if (content && String(content).length > MAX_CONTENT_LENGTH) {
+      return res.status(400).json({ error: "내용이 너무 깁니다. 이미지 용량을 줄이거나 나눠서 작성해주세요." });
+    }
+    if (isArchiveContentEmpty(content || "")) return res.status(400).json({ error: "내용을 입력해주세요." });
+
+    const cleanContent = sanitizeContent(content || "");
+    const thumbnail = (image || "").trim() || extractFirstImage(cleanContent) || ARCHIVE_DEFAULT_IMAGE[category];
 
     const list = await store.read("archive");
     const entry = {
       id: store.makeId(),
       title: title.trim().slice(0, 120),
       category,
-      image: (image || "").trim() || "assets/archive-1.png",
+      author: (author || "운영팀").trim().slice(0, 30) || "운영팀",
+      image: thumbnail,
+      content: cleanContent,
+      excerpt: makeExcerpt(cleanContent),
       date: today(),
+      updatedAt: null,
+      views: 0,
     };
     list.unshift(entry);
     await store.write("archive", list);
     res.json(entry);
+  } catch (err) {
+    res.status(500).json({ error: "데이터베이스 연결에 실패했습니다.", detail: err.message });
+  }
+});
+
+router.put("/archive/:id", async (req, res) => {
+  try {
+    const list = await store.read("archive");
+    const idx = list.findIndex((a) => a.id === req.params.id);
+    if (idx === -1) return res.status(404).json({ error: "기록을 찾을 수 없습니다." });
+
+    const { title, category, image, author, content } = req.body || {};
+    if (title !== undefined) {
+      if (!title.trim()) return res.status(400).json({ error: "제목을 입력해주세요." });
+      list[idx].title = title.trim().slice(0, 120);
+    }
+    if (category !== undefined) {
+      if (!ARCHIVE_CATEGORIES.includes(category)) return res.status(400).json({ error: "카테고리가 올바르지 않습니다." });
+      list[idx].category = category;
+    }
+    if (author !== undefined) list[idx].author = (author || "운영팀").trim().slice(0, 30) || "운영팀";
+    if (content !== undefined) {
+      if (String(content).length > MAX_CONTENT_LENGTH) {
+        return res.status(400).json({ error: "내용이 너무 깁니다. 이미지 용량을 줄이거나 나눠서 작성해주세요." });
+      }
+      if (isArchiveContentEmpty(content)) return res.status(400).json({ error: "내용을 입력해주세요." });
+      const cleanContent = sanitizeContent(content);
+      list[idx].content = cleanContent;
+      list[idx].excerpt = makeExcerpt(cleanContent);
+      const explicitImage = (image || "").trim();
+      list[idx].image = explicitImage || extractFirstImage(cleanContent) || ARCHIVE_DEFAULT_IMAGE[list[idx].category];
+    } else if (image !== undefined && image.trim()) {
+      list[idx].image = image.trim();
+    }
+    list[idx].updatedAt = today();
+
+    await store.write("archive", list);
+    res.json(list[idx]);
   } catch (err) {
     res.status(500).json({ error: "데이터베이스 연결에 실패했습니다.", detail: err.message });
   }

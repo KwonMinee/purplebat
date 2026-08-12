@@ -34,6 +34,21 @@ router.get("/archive", async (req, res) => {
   }
 });
 
+// 아카이브 기록 상세 (조회수 +1). 로그인 없이 누구나 볼 수 있습니다.
+router.get("/archive/:id", async (req, res) => {
+  try {
+    const list = await store.read("archive");
+    const idx = list.findIndex((a) => a.id === req.params.id);
+    if (idx === -1) return res.status(404).json({ error: "기록을 찾을 수 없습니다." });
+
+    list[idx].views = (list[idx].views || 0) + 1;
+    await store.write("archive", list);
+    res.json(list[idx]);
+  } catch (err) {
+    res.status(500).json({ error: "데이터베이스 연결에 실패했습니다.", detail: err.message });
+  }
+});
+
 router.get("/goods", async (req, res) => {
   try {
     const { category } = req.query;

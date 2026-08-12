@@ -1677,6 +1677,15 @@ a {
   background: var(--purple-soft);
 }
 
+.archive-card.clickable {
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.archive-card.clickable:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(30, 15, 51, 0.12);
+}
+
 /* ---------- Modal ---------- */
 
 .modal-overlay {

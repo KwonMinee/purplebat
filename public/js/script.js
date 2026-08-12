@@ -344,7 +344,7 @@ function archiveCardHtml(item) {
   const cls = ARCHIVE_TAG_CLASS[item.category] || "tag-photo";
   const label = ARCHIVE_TAG_LABEL[item.category] || item.category;
   return `
-    <article class="archive-card" data-category="${escapeHtml(item.category)}" data-id="${escapeHtml(item.id)}">
+    <article class="archive-card clickable" data-category="${escapeHtml(item.category)}" data-id="${escapeHtml(item.id)}">
       <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" />
       <div>
         <div class="archive-meta">
