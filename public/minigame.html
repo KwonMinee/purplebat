@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>미니게임 | 보라박쥐단</title>
+<meta name="description" content="보라박쥐단이 만든 미니게임을 플레이하고 랭킹에 도전하세요" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-badge">🦇</span>
+      <span class="brand-text">
+        <span class="brand-title">보라박쥐단</span>
+        <span class="brand-subtitle">ADVENTURE ARCHIVE</span>
+      </span>
+    </a>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html" class="nav-link">홈</a>
+      <a href="party.html" class="nav-link">파티원</a>
+      <a href="archive.html" class="nav-link">아카이브</a>
+      <a href="minigame.html" class="nav-link active">미니게임</a>
+      <a href="goods.html" class="nav-link">굿즈샵</a>
+      <a href="community.html" class="nav-link">커뮤니티</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" aria-label="검색" id="searchBtn">
+        <span class="icon" style="width:20px;height:20px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+      </button>
+      <button class="icon-btn" aria-label="장바구니" id="cartBtn">
+        <span class="icon" style="width:20px;height:20px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></span>
+      </button>
+      <button class="avatar-btn" aria-label="내 계정"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span></button>
+      <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="page-body">
+    <div class="breadcrumb">
+      <a href="index.html">홈</a><span>/</span><span class="current">미니게임</span>
+    </div>
+
+    <section class="page-hero">
+      <span class="page-hero-eyebrow">MINIGAME ARENA</span>
+      <h1>🎮 미니게임</h1>
+      <p>가볍게 즐기면서 보상도 챙기세요. 매주 랭킹 1위에게는 특별 굿즈 쿠폰을 드려요!</p>
+      <div class="page-hero-stats">
+        <div class="stat"><b>6종</b><span>플레이 가능</span></div>
+        <div class="stat"><b>매주 월요일</b><span>랭킹 초기화</span></div>
+      </div>
+    </section>
+
+    <div class="filter-tabs" id="gameFilters">
+      <button class="filter-tab active" data-filter="all">전체</button>
+      <button class="filter-tab" data-filter="easy">쉬움</button>
+      <button class="filter-tab" data-filter="normal">보통</button>
+      <button class="filter-tab" data-filter="hard">어려움</button>
+    </div>
+
+    <section class="grid-full cols-3" id="gameGrid">
+      <div class="minigame-card" data-category="easy">
+        <img src="assets/game-thumb.png" alt="슬라임 퇴치 작전" style="width:84px;height:84px;object-fit:cover;border-radius:12px;border:2px solid var(--border);" />
+        <h3>슬라임 퇴치 작전</h3>
+        <p class="desc">몰려오는 슬라임을 클릭해서 처치하는 클리커 게임. 최고 기록 9,999점에 도전해보세요.</p>
+        <div class="meta-row">
+          <span class="tag difficulty-easy">난이도: 쉬움</span>
+          <span class="tag" style="background:var(--purple-soft);color:var(--purple);">최고 기록 9,999점</span>
+        </div>
+        <button class="btn btn-primary play-game-btn" data-game="슬라임 퇴치 작전">게임 시작</button>
+      </div>
+
+      <div class="minigame-card" data-category="normal">
+        <div class="minigame-icon" style="background:linear-gradient(135deg,#7d533c,#3a2218);">🌀</div>
+        <h3>던전 미로 탈출</h3>
+        <p class="desc">제한 시간 안에 무작위로 생성되는 미로를 탈출하세요. 함정을 피해야 살아남습니다.</p>
+        <div class="meta-row">
+          <span class="tag difficulty-normal">난이도: 보통</span>
+          <span class="tag" style="background:var(--purple-soft);color:var(--purple);">최단 기록 1:24</span>
+        </div>
+        <button class="btn btn-primary play-game-btn" data-game="던전 미로 탈출">게임 시작</button>
+      </div>
+
+      <div class="minigame-card" data-category="hard">
+        <div class="minigame-icon" style="background:linear-gradient(135deg,#5c2d91,#2f1750);">💰</div>
+        <h3>보물 사냥꾼</h3>
+        <p class="desc">함정으로 가득한 유적 속에서 진짜 보물 상자를 찾아내는 기억력 게임.</p>
+        <div class="meta-row">
+          <span class="tag difficulty-hard">난이도: 어려움</span>
+          <span class="tag" style="background:var(--purple-soft);color:var(--purple);">최고 기록 7,240점</span>
+        </div>
+        <button class="btn btn-primary play-game-btn" data-game="보물 사냥꾼">게임 시작</button>
+      </div>
+
+      <div class="minigame-card" data-category="easy">
+        <div class="minigame-icon" style="background:linear-gradient(135deg,#92400e,#d97706);">❓</div>
+        <h3>몬스터 퀴즈</h3>
+        <p class="desc">보라박쥐단이 만난 몬스터들에 대한 상식 퀴즈를 풀고 도감을 완성하세요.</p>
+        <div class="meta-row">
+          <span class="tag difficulty-easy">난이도: 쉬움</span>
+          <span class="tag" style="background:var(--purple-soft);color:var(--purple);">전체 12문제</span>
+        </div>
+        <button class="btn btn-primary play-game-btn" data-game="몬스터 퀴즈">게임 시작</button>
+      </div>
+
+      <div class="minigame-card" data-category="normal">
+        <div class="minigame-icon" style="background:linear-gradient(135deg,#9d174d,#db2777);">🎵</div>
+        <h3>리듬 배틀</h3>
+        <p class="desc">리온의 테마곡에 맞춰 타이밍을 맞추는 리듬 게임. 콤보를 이어가 보세요.</p>
+        <div class="meta-row">
+          <span class="tag difficulty-normal">난이도: 보통</span>
+          <span class="tag" style="background:var(--purple-soft);color:var(--purple);">최고 콤보 128</span>
+        </div>
+        <button class="btn btn-primary play-game-btn" data-game="리듬 배틀">게임 시작</button>
+      </div>
+
+      <div class="minigame-card" data-category="hard">
+        <div class="minigame-icon" style="background:linear-gradient(135deg,#1e40af,#1d4ed8);">🃏</div>
+        <h3>카드 배틀 아레나</h3>
+        <p class="desc">파티원 카드를 조합해 상대와 전략 대결을 펼치는 턴제 카드 배틀.</p>
+        <div class="meta-row">
+          <span class="tag difficulty-hard">난이도: 어려움</span>
+          <span class="tag" style="background:var(--purple-soft);color:var(--purple);">시즌 랭킹 운영 중</span>
+        </div>
+        <button class="btn btn-primary play-game-btn" data-game="카드 배틀 아레나">게임 시작</button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="assets/logo-hero.png" alt="보라박쥐단 로고" />
+        <div class="footer-brand-text">
+          <span class="title">보라박쥐단</span>
+          <span class="subtitle">ADVENTURE ARCHIVE</span>
+        </div>
+      </div>
+      <div class="social-links">
+        <a href="#" class="social-btn" aria-label="닫기"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span></a>
+        <a href="#" class="social-btn" aria-label="유튜브"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg></span></a>
+        <a href="#" class="social-btn" aria-label="트위터"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg></span></a>
+        <a href="#" class="social-btn" aria-label="인스타그램"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></svg></span></a>
+      </div>
+    </div>
+    <hr class="footer-divider" />
+    <div class="footer-bottom">
+      <span class="copyright">© 2025 보라박쥐단 Adventure Archive. All rights reserved.</span>
+      <div class="footer-links"><span>이용약관</span><span>개인정보처리방침</span><a href="admin-login.html" style="opacity:0.5;">관리자</a></div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+<script src="js/api.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

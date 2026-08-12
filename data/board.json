@@ -1,0 +1,17 @@
+[
+  { "id": "b1", "category": "notice", "title": "🛡️ 1월 업데이트 완료 안내", "author": "운영팀", "date": "2025.01.12", "views": 421 },
+  { "id": "b2", "category": "notice", "title": "🔮 굿즈샵 신상품 대량 입고 소식!", "author": "운영팀", "date": "2025.01.10", "views": 358 },
+  { "id": "b3", "category": "notice", "title": "🗺️ 미니게임 리그 시즌2 연장 결정", "author": "운영팀", "date": "2025.01.05", "views": 290 },
+  { "id": "b4", "category": "notice", "title": "⚠️ 서버 긴급 점검 공지", "author": "운영팀", "date": "2025.01.01", "views": 512 },
+  { "id": "b5", "category": "notice", "title": "📜 방명록 기능이 새로 열렸어요", "author": "운영팀", "date": "2024.12.20", "views": 233 },
+  { "id": "b6", "category": "free", "title": "오늘 티아마트 레이드 진짜 짜릿했다 ㅋㅋ", "author": "용감한기사단", "date": "2025.01.14", "views": 214 },
+  { "id": "b7", "category": "free", "title": "엘리아 신규 스킬트리 어떻게 짜세요?", "author": "마법사루나", "date": "2025.01.13", "views": 158 },
+  { "id": "b8", "category": "free", "title": "굿즈샵 머그컵 실물 후기 (사진 있음)", "author": "드래곤슬레이어", "date": "2025.01.11", "views": 302 },
+  { "id": "b9", "category": "free", "title": "리온 신곡 나왔던데 다들 들어보셨나요", "author": "방랑시인제이", "date": "2025.01.09", "views": 97 },
+  { "id": "b10", "category": "qna", "title": "슬라임 퇴치 작전 9999점 넘기는 팁 있나요?", "author": "초보모험가", "date": "2025.01.14", "views": 88 },
+  { "id": "b11", "category": "qna", "title": "파티원 지원은 어디서 하나요?", "author": "새싹바드", "date": "2025.01.12", "views": 41 },
+  { "id": "b12", "category": "qna", "title": "굿즈 배송 얼마나 걸리나요?", "author": "궁금이", "date": "2025.01.08", "views": 63 },
+  { "id": "b13", "category": "cert", "title": "드디어 던전 미로 탈출 1분대 진입 인증!", "author": "제드릭팬", "date": "2025.01.13", "views": 145 },
+  { "id": "b14", "category": "cert", "title": "굿즈 4종 세트 언박싱 인증합니다", "author": "박쥐수집가", "date": "2025.01.07", "views": 201 },
+  { "id": "b15", "category": "cert", "title": "카드 배틀 아레나 시즌1 랭킹 3위 인증", "author": "브루카사랑", "date": "2025.01.03", "views": 176 }
+]

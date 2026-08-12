@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>관리자 로그인 | 보라박쥐단</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+<div class="admin-auth-wrap">
+  <div class="admin-auth-card">
+    <div class="admin-auth-brand">
+      <div class="badge">🦇</div>
+      <h1>보라박쥐단 관리자</h1>
+      <p>관리자 모드는 로그인 또는 최초 1회 회원가입을 해야만 들어갈 수 있어요.</p>
+    </div>
+
+    <div class="admin-tabs" id="authTabs">
+      <button class="admin-tab-btn active" data-tab="login">로그인</button>
+      <button class="admin-tab-btn" data-tab="signup" id="signupTabBtn">회원가입</button>
+    </div>
+
+    <div class="admin-alert" id="authAlert"></div>
+
+    <form class="admin-form-panel active" id="loginForm">
+      <label>아이디
+        <input type="text" id="loginUsername" autocomplete="username" required />
+      </label>
+      <label>비밀번호
+        <input type="password" id="loginPassword" autocomplete="current-password" required />
+      </label>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">로그인</button>
+    </form>
+
+    <form class="admin-form-panel" id="signupForm">
+      <label>관리자 아이디 (3자 이상)
+        <input type="text" id="signupUsername" autocomplete="username" minlength="3" required />
+      </label>
+      <label>비밀번호 (6자 이상)
+        <input type="password" id="signupPassword" autocomplete="new-password" minlength="6" required />
+      </label>
+      <label>비밀번호 확인
+        <input type="password" id="signupPasswordConfirm" autocomplete="new-password" minlength="6" required />
+      </label>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">관리자 계정 만들기</button>
+    </form>
+
+    <p class="admin-hint" id="signupHint">관리자 계정은 이미 만들어져 있어요. 로그인해주세요.</p>
+    <a href="index.html" class="admin-back-link">← 홈페이지로 돌아가기</a>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

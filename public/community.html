@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>커뮤니티 | 보라박쥐단</title>
+<meta name="description" content="보라박쥐단 공지사항, 자유게시판, 방명록" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-badge">🦇</span>
+      <span class="brand-text">
+        <span class="brand-title">보라박쥐단</span>
+        <span class="brand-subtitle">ADVENTURE ARCHIVE</span>
+      </span>
+    </a>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html" class="nav-link">홈</a>
+      <a href="party.html" class="nav-link">파티원</a>
+      <a href="archive.html" class="nav-link">아카이브</a>
+      <a href="minigame.html" class="nav-link">미니게임</a>
+      <a href="goods.html" class="nav-link">굿즈샵</a>
+      <a href="community.html" class="nav-link active">커뮤니티</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" aria-label="검색" id="searchBtn">
+        <span class="icon" style="width:20px;height:20px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+      </button>
+      <button class="icon-btn" aria-label="장바구니" id="cartBtn">
+        <span class="icon" style="width:20px;height:20px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></span>
+      </button>
+      <button class="avatar-btn" aria-label="내 계정"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span></button>
+      <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="page-body">
+    <div class="breadcrumb">
+      <a href="index.html">홈</a><span>/</span><span class="current">커뮤니티</span>
+    </div>
+
+    <section class="page-hero">
+      <span class="page-hero-eyebrow">COMMUNITY</span>
+      <h1>💬 커뮤니티</h1>
+      <p>공지사항부터 자유로운 수다, 질문, 인증까지! 모험가들과 함께 이야기를 나눠보세요.</p>
+      <div class="page-hero-stats">
+        <div class="stat"><b>1,204명</b><span>가입 모험가</span></div>
+        <div class="stat"><b>128개</b><span>방명록 메시지</span></div>
+      </div>
+    </section>
+
+    <div id="notice"></div>
+    <section class="panel">
+      <div class="board-tabs" id="boardTabs">
+        <button class="board-tab active" data-board="notice">공지사항</button>
+        <button class="board-tab" data-board="free">자유게시판</button>
+        <button class="board-tab" data-board="qna">질문게시판</button>
+        <button class="board-tab" data-board="cert">인증게시판</button>
+      </div>
+
+      <div class="board-panel active" id="board-notice">
+        <div class="board-list" id="boardListNotice">
+          <div class="board-row"><span class="tag" style="background:var(--purple-soft);color:var(--purple);">공지</span><span class="board-title">🛡️ 1월 업데이트 완료 안내</span><span class="board-meta"><span>운영팀</span><span>2025.01.12</span></span></div>
+          <div class="board-row"><span class="tag" style="background:var(--purple-soft);color:var(--purple);">공지</span><span class="board-title">🔮 굿즈샵 신상품 대량 입고 소식!</span><span class="board-meta"><span>운영팀</span><span>2025.01.10</span></span></div>
+          <div class="board-row"><span class="tag" style="background:var(--purple-soft);color:var(--purple);">공지</span><span class="board-title">🗺️ 미니게임 리그 시즌2 연장 결정</span><span class="board-meta"><span>운영팀</span><span>2025.01.05</span></span></div>
+          <div class="board-row"><span class="tag" style="background:var(--purple-soft);color:var(--purple);">공지</span><span class="board-title">⚠️ 서버 긴급 점검 공지</span><span class="board-meta"><span>운영팀</span><span>2025.01.01</span></span></div>
+          <div class="board-row"><span class="tag" style="background:var(--purple-soft);color:var(--purple);">공지</span><span class="board-title">📜 방명록 기능이 새로 열렸어요</span><span class="board-meta"><span>운영팀</span><span>2024.12.20</span></span></div>
+        </div>
+      </div>
+
+      <div class="board-panel" id="board-free">
+        <div class="board-list" id="boardListFree">
+          <div class="board-row"><span class="tag tag-photo">잡담</span><span class="board-title">오늘 티아마트 레이드 진짜 짜릿했다 ㅋㅋ</span><span class="board-meta"><span>용감한기사단</span><span>조회 214</span><span>2025.01.14</span></span></div>
+          <div class="board-row"><span class="tag tag-illustration">잡담</span><span class="board-title">엘리아 신규 스킬트리 어떻게 짜세요?</span><span class="board-meta"><span>마법사루나</span><span>조회 158</span><span>2025.01.13</span></span></div>
+          <div class="board-row"><span class="tag tag-review">잡담</span><span class="board-title">굿즈샵 머그컵 실물 후기 (사진 있음)</span><span class="board-meta"><span>드래곤슬레이어</span><span>조회 302</span><span>2025.01.11</span></span></div>
+          <div class="board-row"><span class="tag tag-video">잡담</span><span class="board-title">리온 신곡 나왔던데 다들 들어보셨나요</span><span class="board-meta"><span>방랑시인제이</span><span>조회 97</span><span>2025.01.09</span></span></div>
+        </div>
+      </div>
+
+      <div class="board-panel" id="board-qna">
+        <div class="board-list" id="boardListQna">
+          <div class="board-row"><span class="tag" style="background:#fef3c7;color:#92400e;">질문</span><span class="board-title">슬라임 퇴치 작전 9999점 넘기는 팁 있나요?</span><span class="board-meta"><span>초보모험가</span><span>답변 12</span><span>2025.01.14</span></span></div>
+          <div class="board-row"><span class="tag" style="background:#fef3c7;color:#92400e;">질문</span><span class="board-title">파티원 지원은 어디서 하나요?</span><span class="board-meta"><span>새싹바드</span><span>답변 5</span><span>2025.01.12</span></span></div>
+          <div class="board-row"><span class="tag" style="background:#fef3c7;color:#92400e;">질문</span><span class="board-title">굿즈 배송 얼마나 걸리나요?</span><span class="board-meta"><span>궁금이</span><span>답변 3</span><span>2025.01.08</span></span></div>
+        </div>
+      </div>
+
+      <div class="board-panel" id="board-cert">
+        <div class="board-list" id="boardListCert">
+          <div class="board-row"><span class="tag" style="background:#dcfce7;color:#166534;">인증</span><span class="board-title">드디어 던전 미로 탈출 1분대 진입 인증!</span><span class="board-meta"><span>제드릭팬</span><span>추천 44</span><span>2025.01.13</span></span></div>
+          <div class="board-row"><span class="tag" style="background:#dcfce7;color:#166534;">인증</span><span class="board-title">굿즈 4종 세트 언박싱 인증합니다</span><span class="board-meta"><span>박쥐수집가</span><span>추천 61</span><span>2025.01.07</span></span></div>
+          <div class="board-row"><span class="tag" style="background:#dcfce7;color:#166534;">인증</span><span class="board-title">카드 배틀 아레나 시즌1 랭킹 3위 인증</span><span class="board-meta"><span>브루카사랑</span><span>추천 29</span><span>2025.01.03</span></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <h2>📜 모험가의 방명록</h2>
+        <span class="status-text" id="guestbookCount">총 128개의 메시지</span>
+      </div>
+      <hr class="rpg-divider" />
+
+      <div class="guestbook-grid" id="guestbookGrid">
+        <div class="guestbook-card">
+          <div class="guestbook-card-header">
+            <div class="guestbook-avatar">⚔️</div>
+            <div class="guestbook-card-meta">
+              <span class="name">용감한기사단</span>
+              <span class="sub"><span class="tag" style="background:var(--purple-soft);color:var(--purple);">팔라딘</span><span class="date">2025.01.14</span></span>
+            </div>
+          </div>
+          <hr />
+          <p class="guestbook-card-message">드디어 티아마트 레이드 클리어!! 아르곤 덕분에 살았다ㅠㅠ 다음 시즌도 같이 모험해요! 🛡️✨</p>
+        </div>
+        <div class="guestbook-card">
+          <div class="guestbook-card-header">
+            <div class="guestbook-avatar">🔮</div>
+            <div class="guestbook-card-meta">
+              <span class="name">마법사루나</span>
+              <span class="sub"><span class="tag tag-illustration">위자드</span><span class="date">2025.01.12</span></span>
+            </div>
+          </div>
+          <hr />
+          <p class="guestbook-card-message">방명록 시스템 생겼군요! 보라박쥐단 아카이브 항상 잘 보고 있어요 🌙 엘리아의 마법 플레이 영상 정말 최고였어요~</p>
+        </div>
+        <div class="guestbook-card">
+          <div class="guestbook-card-header">
+            <div class="guestbook-avatar">🐉</div>
+            <div class="guestbook-card-meta">
+              <span class="name">드래곤슬레이어</span>
+              <span class="sub"><span class="tag tag-review">바바리안</span><span class="date">2025.01.10</span></span>
+            </div>
+          </div>
+          <hr />
+          <p class="guestbook-card-message">굿즈샵 핀뱃지 받았는데 퀄리티 대박입니다 🎉 다음엔 아크릴 스탠드도 주문할 예정! 브루카 팬이에요ㅎㅎ</p>
+        </div>
+        <div class="guestbook-card">
+          <div class="guestbook-card-header">
+            <div class="guestbook-avatar">🎵</div>
+            <div class="guestbook-card-meta">
+              <span class="name">방랑시인제이</span>
+              <span class="sub"><span class="tag tag-video">바드</span><span class="date">2025.01.08</span></span>
+            </div>
+          </div>
+          <hr />
+          <p class="guestbook-card-message">리온 바드 캐릭터 팬입니다🎶 미니게임 슬라임 퇴치 작전 9999점 넘기는 법 알려주실 분~ 언제나 응원해요!</p>
+        </div>
+      </div>
+
+      <hr class="rpg-divider" />
+
+      <form class="guestbook-write" id="guestbookForm">
+        <h3>✍️ 방명록 남기기</h3>
+        <div class="form-row">
+          <input type="text" class="form-input name" id="gbName" placeholder="닉네임을 입력하세요" required />
+          <input type="text" class="form-input role" id="gbRole" placeholder="직업/역할" />
+        </div>
+        <textarea class="form-textarea" id="gbMessage" placeholder="모험가님의 이야기를 들려주세요... 📜" required></textarea>
+        <div class="form-footer">
+          <span class="hint">* 방명록은 검토 후 게시됩니다</span>
+          <button type="submit" class="btn btn-primary">📜 방명록 남기기</button>
+        </div>
+      </form>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="assets/logo-hero.png" alt="보라박쥐단 로고" />
+        <div class="footer-brand-text">
+          <span class="title">보라박쥐단</span>
+          <span class="subtitle">ADVENTURE ARCHIVE</span>
+        </div>
+      </div>
+      <div class="social-links">
+        <a href="#" class="social-btn" aria-label="닫기"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span></a>
+        <a href="#" class="social-btn" aria-label="유튜브"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg></span></a>
+        <a href="#" class="social-btn" aria-label="트위터"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg></span></a>
+        <a href="#" class="social-btn" aria-label="인스타그램"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></svg></span></a>
+      </div>
+    </div>
+    <hr class="footer-divider" />
+    <div class="footer-bottom">
+      <span class="copyright">© 2025 보라박쥐단 Adventure Archive. All rights reserved.</span>
+      <div class="footer-links"><span>이용약관</span><span>개인정보처리방침</span><a href="admin-login.html" style="opacity:0.5;">관리자</a></div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+<script src="js/api.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

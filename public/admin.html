@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>관리자 대시보드 | 보라박쥐단</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+<div class="admin-shell">
+  <div class="admin-topbar">
+    <div class="admin-topbar-brand">🦇 보라박쥐단 관리자 대시보드</div>
+    <div class="admin-topbar-actions">
+      <span id="adminUsername">-</span>님으로 로그인됨
+      <a href="index.html" class="link-more">사이트 보기</a>
+      <button class="btn-danger" id="logoutBtn">로그아웃</button>
+    </div>
+  </div>
+
+  <div class="admin-body">
+    <div class="admin-stats-row" id="statsRow">
+      <div class="admin-stat-card"><b id="statNotices">-</b><span>공지사항</span></div>
+      <div class="admin-stat-card"><b id="statArchive">-</b><span>아카이브</span></div>
+      <div class="admin-stat-card"><b id="statGoods">-</b><span>굿즈</span></div>
+      <div class="admin-stat-card"><b id="statGuestbook">-</b><span>방명록</span></div>
+      <div class="admin-stat-card"><b id="statBoard">-</b><span>게시글</span></div>
+      <div class="admin-stat-card"><b id="statMinigame">-</b><span>미니게임</span></div>
+    </div>
+
+    <div class="admin-panel-tabs" id="adminPanelTabs">
+      <button class="admin-panel-tab active" data-panel="notices">공지사항</button>
+      <button class="admin-panel-tab" data-panel="archive">아카이브</button>
+      <button class="admin-panel-tab" data-panel="goods">굿즈샵</button>
+      <button class="admin-panel-tab" data-panel="guestbook">방명록</button>
+      <button class="admin-panel-tab" data-panel="board">게시판</button>
+      <button class="admin-panel-tab" data-panel="minigame">미니게임</button>
+    </div>
+
+    <!-- 공지사항 -->
+    <section class="admin-section active" id="panel-notices">
+      <h2>공지사항 관리</h2>
+      <form class="admin-inline-form" id="form-notices">
+        <div class="field">제목<input type="text" name="title" placeholder="🛡️ 새 공지 제목" required /></div>
+        <button type="submit" class="btn btn-primary">추가</button>
+      </form>
+      <table class="admin-table">
+        <thead><tr><th>제목</th><th>날짜</th><th></th></tr></thead>
+        <tbody id="table-notices"></tbody>
+      </table>
+    </section>
+
+    <!-- 아카이브 -->
+    <section class="admin-section" id="panel-archive">
+      <h2>아카이브 관리</h2>
+      <form class="admin-inline-form" id="form-archive">
+        <div class="field">제목<input type="text" name="title" placeholder="기록 제목" required /></div>
+        <div class="field">카테고리
+          <select name="category">
+            <option value="photo">사진</option>
+            <option value="video">영상</option>
+            <option value="illustration">일러스트</option>
+            <option value="review">리뷰</option>
+          </select>
+        </div>
+        <div class="field">이미지 경로<input type="text" name="image" placeholder="assets/archive-1.png" /></div>
+        <button type="submit" class="btn btn-primary">추가</button>
+      </form>
+      <table class="admin-table">
+        <thead><tr><th>이미지</th><th>제목</th><th>카테고리</th><th>날짜</th><th></th></tr></thead>
+        <tbody id="table-archive"></tbody>
+      </table>
+    </section>
+
+    <!-- 굿즈샵 -->
+    <section class="admin-section" id="panel-goods">
+      <h2>굿즈샵 관리</h2>
+      <form class="admin-inline-form" id="form-goods">
+        <div class="field">상품명<input type="text" name="name" placeholder="상품명" required /></div>
+        <div class="field">가격<input type="number" name="price" placeholder="12000" min="1" required /></div>
+        <div class="field">카테고리
+          <select name="category">
+            <option value="badge">뱃지/키링</option>
+            <option value="figure">스탠드/피규어</option>
+            <option value="stationery">문구</option>
+            <option value="living">리빙</option>
+          </select>
+        </div>
+        <div class="field">이미지 경로<input type="text" name="image" placeholder="assets/goods-pin.png" /></div>
+        <button type="submit" class="btn btn-primary">추가</button>
+      </form>
+      <table class="admin-table">
+        <thead><tr><th>이미지</th><th>상품명</th><th>가격</th><th>카테고리</th><th></th></tr></thead>
+        <tbody id="table-goods"></tbody>
+      </table>
+    </section>
+
+    <!-- 방명록 -->
+    <section class="admin-section" id="panel-guestbook">
+      <h2>방명록 관리 (모더레이션)</h2>
+      <p class="admin-hint" style="text-align:left;">방명록은 방문자가 직접 작성합니다. 부적절한 글은 삭제할 수 있어요.</p>
+      <table class="admin-table">
+        <thead><tr><th>닉네임</th><th>역할</th><th>내용</th><th>날짜</th><th></th></tr></thead>
+        <tbody id="table-guestbook"></tbody>
+      </table>
+    </section>
+
+    <!-- 게시판 -->
+    <section class="admin-section" id="panel-board">
+      <h2>게시판 관리</h2>
+      <form class="admin-inline-form" id="form-board">
+        <div class="field">게시판
+          <select name="category">
+            <option value="notice">공지</option>
+            <option value="free">자유</option>
+            <option value="qna">질문</option>
+            <option value="cert">인증</option>
+          </select>
+        </div>
+        <div class="field">제목<input type="text" name="title" placeholder="게시글 제목" required /></div>
+        <div class="field">작성자<input type="text" name="author" placeholder="운영팀" /></div>
+        <button type="submit" class="btn btn-primary">추가</button>
+      </form>
+      <table class="admin-table">
+        <thead><tr><th>게시판</th><th>제목</th><th>작성자</th><th>날짜</th><th></th></tr></thead>
+        <tbody id="table-board"></tbody>
+      </table>
+    </section>
+
+    <!-- 미니게임 -->
+    <section class="admin-section" id="panel-minigame">
+      <h2>미니게임 관리</h2>
+      <p class="admin-hint" style="text-align:left;">목록에서 "수정"을 누르면 아래 폼에 내용이 채워집니다. 수정을 마치려면 "수정 완료"를, 취소하려면 "취소"를 눌러주세요.</p>
+      <form class="admin-inline-form" id="form-minigame">
+        <input type="hidden" name="editId" value="" />
+        <div class="field">게임 이름<input type="text" name="title" placeholder="예: 슬라임 퇴치 작전" required /></div>
+        <div class="field">난이도
+          <select name="category">
+            <option value="easy">쉬움</option>
+            <option value="normal">보통</option>
+            <option value="hard">어려움</option>
+          </select>
+        </div>
+        <div class="field">아이콘(이모지)<input type="text" name="icon" placeholder="🎮" maxlength="4" /></div>
+        <div class="field">뱃지 문구<input type="text" name="highlight" placeholder="예: 최고 기록 9,999점" /></div>
+        <div class="field">그라디언트 시작색<input type="color" name="colorFrom" value="#5c2d91" /></div>
+        <div class="field">그라디언트 끝색<input type="color" name="colorTo" value="#2f1750" /></div>
+        <div class="field" style="flex:2 1 260px;">설명<input type="text" name="description" placeholder="게임 소개 문구" /></div>
+        <button type="submit" class="btn btn-primary" id="minigameSubmitBtn">추가</button>
+        <button type="button" class="btn-outline" id="minigameCancelBtn" style="display:none;">취소</button>
+      </form>
+      <table class="admin-table">
+        <thead><tr><th>아이콘</th><th>게임 이름</th><th>난이도</th><th>뱃지 문구</th><th></th></tr></thead>
+        <tbody id="table-minigame"></tbody>
+      </table>
+    </section>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/api.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

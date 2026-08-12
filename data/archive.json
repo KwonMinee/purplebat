@@ -1,0 +1,14 @@
+[
+  { "id": "a1", "category": "photo", "title": "티아마트 레이드 성공 기념샷!", "image": "assets/archive-1.png", "date": "2025.01.12" },
+  { "id": "a2", "category": "video", "title": "제드릭의 은신 잠입 플레이 하이라이트", "image": "assets/archive-2.png", "date": "2025.01.08" },
+  { "id": "a3", "category": "illustration", "title": "보라박쥐단 공식 일러스트 (월페이퍼)", "image": "assets/archive-3.png", "date": "2025.01.05" },
+  { "id": "a4", "category": "review", "title": "새로운 미니게임 정복기 솔직 리뷰", "image": "assets/archive-4.png", "date": "2025.01.02" },
+  { "id": "a5", "category": "photo", "title": "2024년 마지막 던전 클리어 단체샷", "image": "assets/archive-1.png", "date": "2024.12.28" },
+  { "id": "a6", "category": "video", "title": "아르곤의 전설급 어그로 탱킹 모음", "image": "assets/archive-2.png", "date": "2024.12.20" },
+  { "id": "a7", "category": "illustration", "title": "엘리아 마법진 컨셉 팬아트", "image": "assets/archive-3.png", "date": "2024.12.15" },
+  { "id": "a8", "category": "review", "title": "아크릴 스탠드 개봉 & 퀄리티 리뷰", "image": "assets/archive-4.png", "date": "2024.12.10" },
+  { "id": "a9", "category": "photo", "title": "주간 길드전 우승 스냅샷", "image": "assets/archive-1.png", "date": "2024.11.30" },
+  { "id": "a10", "category": "video", "title": "리온의 광역 버프 콤보 모음", "image": "assets/archive-2.png", "date": "2024.11.22" },
+  { "id": "a11", "category": "illustration", "title": "보라박쥐단 5인 단체 일러스트", "image": "assets/archive-3.png", "date": "2024.11.10" },
+  { "id": "a12", "category": "review", "title": "슬라임 퇴치 작전 공략 & 리뷰", "image": "assets/archive-4.png", "date": "2024.11.02" }
+]

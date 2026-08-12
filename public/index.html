@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>보라박쥐단 | ADVENTURE ARCHIVE</title>
+<meta name="description" content="보라박쥐단의 모험을 기록하고 추억을 공유하는 어드벤처 아카이브 홈페이지" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ============ NAVIGATION ============ -->
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-badge">🦇</span>
+      <span class="brand-text">
+        <span class="brand-title">보라박쥐단</span>
+        <span class="brand-subtitle">ADVENTURE ARCHIVE</span>
+      </span>
+    </a>
+
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html" class="nav-link active">홈</a>
+      <a href="party.html" class="nav-link">파티원</a>
+      <a href="archive.html" class="nav-link">아카이브</a>
+      <a href="minigame.html" class="nav-link">미니게임</a>
+      <a href="goods.html" class="nav-link">굿즈샵</a>
+      <a href="community.html" class="nav-link">커뮤니티</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="icon-btn" aria-label="검색" id="searchBtn">
+        <span class="icon" style="width:20px;height:20px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </span>
+      </button>
+      <button class="icon-btn" aria-label="장바구니" id="cartBtn">
+        <span class="icon" style="width:20px;height:20px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+        </span>
+      </button>
+      <button class="avatar-btn" aria-label="내 계정">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </span>
+      </button>
+      <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <div class="main-body">
+
+    <!-- ============ HERO + WELCOME/NOTICE ============ -->
+    <section class="hero-welcome-row">
+      <div class="hero-section">
+        <img src="assets/welcome.png" alt="보라박쥐단 모험 배경" class="hero-bg" />
+        <div class="hero-overlay"></div>
+
+        <div class="hero-brand">
+          <div class="hero-brand-row">
+            <img src="assets/logo-hero.png" alt="보라박쥐단 로고" class="hero-logo" />
+            <h1 class="hero-brand-title">보라박쥐단</h1>
+          </div>
+          <p class="hero-brand-sub">ADVENTURE ARCHIVE</p>
+        </div>
+
+        <div class="hero-cta-block">
+          <p>우리의 모험을 기록하고, 추억을 공유하는 곳</p>
+          <a href="archive.html" class="btn btn-primary">모험 시작하기 &gt;</a>
+        </div>
+      </div>
+
+      <div class="welcome-notice-col">
+        <div class="welcome-banner">
+          <div class="welcome-banner-inner">
+            <h3>어서와, 모험가!</h3>
+            <p>보라박쥐단의 모험 기록을 둘러보세요</p>
+            <a href="archive.html" class="btn btn-secondary">모험 기록 보기</a>
+          </div>
+        </div>
+
+        <div class="notice-board">
+          <div class="section-heading">
+            <h3>공지사항</h3>
+            <a href="community.html#notice" class="link-more">더보기 +</a>
+          </div>
+        <hr class="rpg-divider" />
+          <div class="notice-list" id="noticeList" data-limit="4">
+            <div class="notice-row">
+              <div class="notice-row-title"><span class="notice-dot"></span><span>🛡️ 1월 업데이트 완료 안내</span></div>
+              <span class="notice-date">2025.01.12</span>
+            </div>
+            <div class="notice-row">
+              <div class="notice-row-title"><span class="notice-dot"></span><span>🔮 굿즈샵 신상품 대량 입고 소식!</span></div>
+              <span class="notice-date">2025.01.10</span>
+            </div>
+            <div class="notice-row">
+              <div class="notice-row-title"><span class="notice-dot"></span><span>🗺️ 미니게임 리그 시즌2 연장 결정</span></div>
+              <span class="notice-date">2025.01.05</span>
+            </div>
+            <div class="notice-row">
+              <div class="notice-row-title"><span class="notice-dot"></span><span>⚠️ 서버 긴급 점검 공지</span></div>
+              <span class="notice-date">2025.01.01</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ARCHIVE + MINIGAME ============ -->
+    <section class="archive-game-row" id="archive">
+      <div class="recent-archive">
+        <div class="section-heading">
+          <h2>최근 아카이브</h2>
+          <a href="archive.html" class="link-more">전체보기 &gt;</a>
+        </div>
+        <hr class="rpg-divider" />
+        <div class="archive-grid" id="archiveGridPreview" data-limit="4">
+          <article class="archive-card">
+            <img src="assets/archive-1.png" alt="티아마트 레이드 성공 기념샷" />
+            <div>
+              <div class="archive-meta">
+                <span class="tag tag-photo">사진</span>
+                <span class="archive-date">2025.01.12</span>
+              </div>
+              <p class="archive-card-title">티아마트 레이드 성공 기념샷!</p>
+            </div>
+          </article>
+          <article class="archive-card">
+            <img src="assets/archive-2.png" alt="제드릭의 은신 잠입 플레이 하이라이트" />
+            <div>
+              <div class="archive-meta">
+                <span class="tag tag-video">영상</span>
+                <span class="archive-date">2025.01.08</span>
+              </div>
+              <p class="archive-card-title">제드릭의 은신 잠입 플레이 하이라이트</p>
+            </div>
+          </article>
+          <article class="archive-card">
+            <img src="assets/archive-3.png" alt="보라박쥐단 공식 일러스트" />
+            <div>
+              <div class="archive-meta">
+                <span class="tag tag-illustration">일러스트</span>
+                <span class="archive-date">2025.01.05</span>
+              </div>
+              <p class="archive-card-title">보라박쥐단 공식 일러스트 (월페이퍼)</p>
+            </div>
+          </article>
+          <article class="archive-card">
+            <img src="assets/archive-4.png" alt="새로운 미니게임 정복기 솔직 리뷰" />
+            <div>
+              <div class="archive-meta">
+                <span class="tag tag-review">리뷰</span>
+                <span class="archive-date">2025.01.02</span>
+              </div>
+              <p class="archive-card-title">새로운 미니게임 정복기 솔직 리뷰</p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="recommended-game" id="minigame">
+        <h2>추천 미니게임</h2>
+        <hr class="rpg-divider" />
+        <div class="game-card">
+          <img src="assets/game-thumb.png" alt="슬라임 퇴치 작전" />
+          <h3>슬라임 퇴치 작전</h3>
+          <div class="game-meta">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+            <span class="icon"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+            <span class="icon"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+            <span>난이도: 쉬움</span>
+          </div>
+          <p class="game-score">최고 기록: 9,999점</p>
+          <a href="minigame.html" class="btn btn-primary">게임 시작</a>
+        </div>
+        <div class="load-more-wrap" style="padding-top:0;">
+          <a href="minigame.html" class="link-more">미니게임 더보기 &gt;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PARTY MEMBERS ============ -->
+    <section class="panel" id="party">
+      <div class="section-heading">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="badge-icon">⚔️</span>
+          <h2>파티원 소개</h2>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <span class="status-text">전체 5명 활성화 중</span>
+          <a href="party.html" class="link-more">전체보기 &gt;</a>
+        </div>
+      </div>
+      <hr class="rpg-divider" />
+      <div class="party-grid">
+        <div class="character-card">
+          <div class="character-card-name"><div class="name">로완</div><div class="role">블랙 드래곤본 팔라딘</div></div>
+          <img src="assets/char-argon.png" alt="로완" />
+          <a href="character.html?id=argon" class="btn-outline">방 입장</a>
+        </div>
+        <div class="character-card">
+          <div class="character-card-name"><div class="name">다렉</div><div class="role">드워프 바바리안</div></div>
+          <img src="assets/char-bruka.png" alt="다렉" />
+          <a href="character.html?id=bruka" class="btn-outline">방 입장</a>
+        </div>
+        <div class="character-card">
+          <div class="character-card-name"><div class="name">콕슨</div><div class="role">하프엘프 위자드</div></div>
+          <img src="assets/char-elia.png" alt="콕슨" />
+          <a href="character.html?id=elia" class="btn-outline">방 입장</a>
+        </div>
+        <div class="character-card">
+          <div class="character-card-name"><div class="name">굴리아나</div><div class="role">인간 바드</div></div>
+          <img src="assets/char-leon.png" alt="굴리아나" />
+          <a href="character.html?id=leon" class="btn-outline">방 입장</a>
+        </div>
+        <div class="character-card">
+          <div class="character-card-name"><div class="name">루스</div><div class="role">골드 드래곤본 로그</div></div>
+          <img src="assets/char-jedrik.png" alt="루스" />
+          <a href="character.html?id=jedrik" class="btn-outline">방 입장</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GOODS SHOP ============ -->
+    <section class="panel" id="goods">
+      <div class="section-heading">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="icon" style="width:24px;height:24px;color:var(--text-dark);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          </span>
+          <h2>보라박쥐단 공식 굿즈샵</h2>
+        </div>
+        <a href="goods.html" class="link-more">전체 보기 &gt;</a>
+      </div>
+      <hr class="rpg-divider" />
+      <div class="goods-grid" id="goodsGridPreview" data-limit="4">
+        <div class="goods-card">
+          <img src="assets/goods-pin.png" alt="보라박쥐단 핀뱃지" />
+          <div class="goods-card-name">보라박쥐단 핀뱃지</div>
+          <div class="goods-card-price">₩ 6,000</div>
+        </div>
+        <div class="goods-card">
+          <img src="assets/goods-stand.png" alt="아크릴 스탠드 세트" />
+          <div class="goods-card-name">아크릴 스탠드 세트</div>
+          <div class="goods-card-price">₩ 18,000</div>
+        </div>
+        <div class="goods-card">
+          <img src="assets/goods-notebook.png" alt="모험 일지 노트" />
+          <div class="goods-card-name">모험 일지 노트</div>
+          <div class="goods-card-price">₩ 9,000</div>
+        </div>
+        <div class="goods-card">
+          <img src="assets/goods-mug.png" alt="보라박쥐단 머그컵" />
+          <div class="goods-card-name">보라박쥐단 머그컵</div>
+          <div class="goods-card-price">₩ 12,000</div>
+        </div>
+      </div>
+      <div class="goods-cta">
+        <a href="goods.html" class="btn btn-primary">🛒 굿즈샵 바로가기</a>
+      </div>
+    </section>
+
+    <!-- ============ BOTTOM NAV CARDS ============ -->
+    <section class="bottom-navigation-cards-row">
+      <a href="archive.html" class="bottom-nav-card">
+        <img src="assets/nav-archive.png" alt="아카이브" />
+        <div class="bottom-nav-card-text">
+          <h3>아카이브</h3>
+          <p>사진, 일러스트, 영상, 리뷰 등 모든 기록을 확인하세요.</p>
+        </div>
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+      </a>
+      <a href="minigame.html" class="bottom-nav-card">
+        <img src="assets/nav-minigame.png" alt="미니게임" />
+        <div class="bottom-nav-card-text">
+          <h3>미니게임</h3>
+          <p>즐겁게 즐기고 보상을 획득하세요!</p>
+        </div>
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+      </a>
+      <a href="community.html" class="bottom-nav-card">
+        <img src="assets/nav-community.png" alt="커뮤니티" />
+        <div class="bottom-nav-card-text">
+          <h3>커뮤니티</h3>
+          <p>모험가들과 이야기를 나누고 정보를 공유해요.</p>
+        </div>
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+      </a>
+    </section>
+
+    <!-- ============ QUOTE BANNER ============ -->
+    <section class="quote-banner">
+      <img src="assets/quote-bg.png" alt="" />
+      <div class="quote-overlay"></div>
+      <div class="quote-banner-text">
+        <blockquote>&ldquo;모든 모험은, 기록이 되어 전설이 된다.&rdquo;</blockquote>
+        <cite>보라박쥐단 공식 아카이브</cite>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ============ GUESTBOOK ============ -->
+  <section class="guestbook-section" id="guestbook">
+    <div class="panel">
+      <div class="section-heading">
+        <h2>📜 모험가의 방명록</h2>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <span class="status-text" id="guestbookCount">총 128개의 메시지</span>
+          <a href="community.html" class="link-more">커뮤니티 전체보기 &gt;</a>
+        </div>
+      </div>
+      <hr class="rpg-divider" />
+
+      <div class="guestbook-grid" id="guestbookGrid" data-limit="4">
+        <div class="guestbook-card">
+          <div class="guestbook-card-header">
+            <div class="guestbook-avatar">⚔️</div>
+            <div class="guestbook-card-meta">
+              <span class="name">용감한기사단</span>
+              <span class="sub"><span class="tag" style="background:var(--purple-soft);color:var(--purple);">팔라딘</span><span class="date">2025.01.14</span></span>
+            </div>
+          </div>
+          <hr />
+          <p class="guestbook-card-message">드디어 티아마트 레이드 클리어!! 아르곤 덕분에 살았다ㅠㅠ 다음 시즌도 같이 모험해요! 🛡️✨</p>
+        </div>
+
+        <div class="guestbook-card">
+          <div class="guestbook-card-header">
+            <div class="guestbook-avatar">🔮</div>
+            <div class="guestbook-card-meta">
+              <span class="name">마법사루나</span>
+              <span class="sub"><span class="tag tag-illustration">위자드</span><span class="date">2025.01.12</span></span>
+            </div>
+          </div>
+          <hr />
+          <p class="guestbook-card-message">방명록 시스템 생겼군요! 보라박쥐단 아카이브 항상 잘 보고 있어요 🌙 엘리아의 마법 플레이 영상 정말 최고였어요~</p>
+        </div>
+
+        <div class="guestbook-card">
+          <div class="guestbook-card-header">
+            <div class="guestbook-avatar">🐉</div>
+            <div class="guestbook-card-meta">
+              <span class="name">드래곤슬레이어</span>
+              <span class="sub"><span class="tag tag-review">바바리안</span><span class="date">2025.01.10</span></span>
+            </div>
+          </div>
+          <hr />
+          <p class="guestbook-card-message">굿즈샵 핀뱃지 받았는데 퀄리티 대박입니다 🎉 다음엔 아크릴 스탠드도 주문할 예정! 브루카 팬이에요ㅎㅎ</p>
+        </div>
+
+        <div class="guestbook-card">
+          <div class="guestbook-card-header">
+            <div class="guestbook-avatar">🎵</div>
+            <div class="guestbook-card-meta">
+              <span class="name">방랑시인제이</span>
+              <span class="sub"><span class="tag tag-video">바드</span><span class="date">2025.01.08</span></span>
+            </div>
+          </div>
+          <hr />
+          <p class="guestbook-card-message">리온 바드 캐릭터 팬입니다🎶 미니게임 슬라임 퇴치 작전 9999점 넘기는 법 알려주실 분~ 언제나 응원해요!</p>
+        </div>
+      </div>
+
+      <hr class="rpg-divider" />
+
+      <form class="guestbook-write" id="guestbookForm">
+        <h3>✍️ 방명록 남기기</h3>
+        <div class="form-row">
+          <input type="text" class="form-input name" id="gbName" placeholder="닉네임을 입력하세요" required />
+          <input type="text" class="form-input role" id="gbRole" placeholder="직업/역할" />
+        </div>
+        <textarea class="form-textarea" id="gbMessage" placeholder="모험가님의 이야기를 들려주세요... 📜" required></textarea>
+        <div class="form-footer">
+          <span class="hint">* 방명록은 검토 후 게시됩니다</span>
+          <button type="submit" class="btn btn-primary">📜 방명록 남기기</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="assets/logo-hero.png" alt="보라박쥐단 로고" />
+        <div class="footer-brand-text">
+          <span class="title">보라박쥐단</span>
+          <span class="subtitle">ADVENTURE ARCHIVE</span>
+        </div>
+      </div>
+      <div class="social-links">
+        <a href="#" class="social-btn" aria-label="닫기">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span>
+        </a>
+        <a href="#" class="social-btn" aria-label="유튜브">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg></span>
+        </a>
+        <a href="#" class="social-btn" aria-label="트위터">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg></span>
+        </a>
+        <a href="#" class="social-btn" aria-label="인스타그램">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></svg></span>
+        </a>
+      </div>
+    </div>
+    <hr class="footer-divider" />
+    <div class="footer-bottom">
+      <span class="copyright">© 2025 보라박쥐단 Adventure Archive. All rights reserved.</span>
+      <div class="footer-links">
+        <span>이용약관</span>
+        <span>개인정보처리방침</span>
+        <a href="admin-login.html" style="opacity:0.5;">관리자</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/api.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

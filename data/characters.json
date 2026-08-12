@@ -1,0 +1,67 @@
+[
+  {
+    "id": "argon",
+    "name": "아르곤",
+    "role": "블랙 드래곤본 팔라딘",
+    "level": 35,
+    "image": "assets/char-argon.png",
+    "description": "파티의 최전방을 지키는 방패. 냉철하지만 동료를 위해서라면 누구보다 먼저 몸을 던진다.",
+    "stats": [
+      { "label": "체력", "value": 92 },
+      { "label": "방어", "value": 88 },
+      { "label": "신앙", "value": 75 }
+    ]
+  },
+  {
+    "id": "bruka",
+    "name": "브루카",
+    "role": "드워프 남자 바바리안",
+    "level": 33,
+    "image": "assets/char-bruka.png",
+    "description": "분노가 곧 힘이 되는 전사. 화가 날수록 강해진다는 소문이 있다.",
+    "stats": [
+      { "label": "힘", "value": 97 },
+      { "label": "체력", "value": 90 },
+      { "label": "인내", "value": 85 }
+    ]
+  },
+  {
+    "id": "elia",
+    "name": "엘리아",
+    "role": "하프엘프 남자 위자드",
+    "level": 30,
+    "image": "assets/char-elia.png",
+    "description": "고서적을 탐닉하는 마법사. 전투보다 연구를 더 좋아하지만 실력만큼은 파티 최강.",
+    "stats": [
+      { "label": "마법", "value": 95 },
+      { "label": "지능", "value": 93 },
+      { "label": "체력", "value": 52 }
+    ]
+  },
+  {
+    "id": "leon",
+    "name": "리온",
+    "role": "인간 여자 바드",
+    "level": 28,
+    "image": "assets/char-leon.png",
+    "description": "노래 한 곡으로 파티의 사기를 끌어올리는 만능 서포터. 즉흥 랩도 가능하다는 소문.",
+    "stats": [
+      { "label": "매력", "value": 96 },
+      { "label": "지원", "value": 89 },
+      { "label": "민첩", "value": 70 }
+    ]
+  },
+  {
+    "id": "jedrik",
+    "name": "제드릭",
+    "role": "골드 드래곤본 로그",
+    "level": 34,
+    "image": "assets/char-jedrik.png",
+    "description": "그림자 속에서 움직이는 은신 전문가. 말은 없지만 파티에서 가장 먼저 위험을 알아챈다.",
+    "stats": [
+      { "label": "민첩", "value": 98 },
+      { "label": "은신", "value": 94 },
+      { "label": "체력", "value": 60 }
+    ]
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "name": "borabakjwidan-homepage",
+  "version": "1.0.0",
+  "description": "보라박쥐단 ADVENTURE ARCHIVE - 풀스택 홈페이지 (Express + MongoDB Atlas)",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "mongodb": "^6.9.0"
+  }
+}
