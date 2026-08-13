@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>굴리아나의 리듬게임 | 보라박쥐단</title>
+<meta name="description" content="굴리아나와 함께 박자를 맞추는 벚꽃 리듬게임 - 보라박쥐단 미니게임">
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; }
+  html,body{
+    width:100%; height:100%; overflow:hidden;
+    background:#0b0620;
+    font-family: 'Courier New', 'Consolas', monospace;
+    color:#fff0f6;
+    -webkit-user-select:none; user-select:none;
+  }
+  #stage{
+    position:relative; width:100vw; height:100vh; overflow:hidden;
+  }
+  #bg-canvas{
+    position:absolute; top:0; left:0; width:100%; height:100%;
+    image-rendering: pixelated; image-rendering: -moz-crisp-edges;
+    display:block;
+  }
+  .pixel-text{
+    text-shadow: 2px 2px 0 #3a1650, 4px 4px 0 rgba(0,0,0,.35);
+    letter-spacing: 2px;
+  }
+  .screen{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    z-index:5;
+  }
+  .hidden{ display:none !important; }
+
+  /* ---------- BACK LINK ---------- */
+  #back-link{
+    position:absolute; top:16px; left:16px; z-index:20;
+    font-family: inherit; font-size:12px; color:#ffe08a;
+    background:rgba(20,8,40,.6); border:2px solid #ff9fc7;
+    padding:7px 14px; text-decoration:none; letter-spacing:1px;
+  }
+  #back-link:hover{ background:rgba(40,16,70,.75); }
+
+  /* ---------- START SCREEN ---------- */
+  #start-screen h1{
+    font-size: clamp(26px,5vw,50px);
+    color:#ffd4e8;
+    margin-bottom: 14px;
+    text-align:center;
+  }
+  #start-screen p{
+    color:#f3d9ee; opacity:.85; margin-bottom: 26px; font-size:14px; text-align:center; max-width:560px; line-height:1.7;
+  }
+  .btn{
+    font-family: inherit;
+    font-size:16px;
+    padding: 12px 26px;
+    margin: 8px;
+    background:#ff9fc7;
+    color:#3a1650;
+    border:3px solid #3a1650;
+    box-shadow: 4px 4px 0 #3a1650;
+    cursor:pointer;
+    letter-spacing:1px;
+    transition: transform .05s;
+  }
+  .btn:hover{ background:#ffc1dc; }
+  .btn:active{ transform: translate(3px,3px); box-shadow: 1px 1px 0 #3a1650; }
+  .btn.secondary{ background:#c9b6ff; }
+  .note-box{
+    margin-top:18px; font-size:12px; color:#e6d6ff; background:rgba(30,10,50,.55);
+    border:2px solid #6a4b9c; padding:10px 16px; max-width:560px; text-align:left; line-height:1.6;
+  }
+  #file-status{ font-size:12px; color:#ffe08a; margin-top:6px; min-height:16px;}
+
+  /* ---------- GAME SCREEN ---------- */
+  #game-screen{ justify-content:flex-start; }
+  #hud{
+    width:100%; display:flex; justify-content:space-between; align-items:flex-start;
+    padding: 18px 26px; z-index:6;
+  }
+  #hud .box{
+    background:rgba(20,8,40,.55); border:2px solid #ff9fc7; padding:8px 14px; font-size:14px;
+  }
+  #combo-display{
+    position:absolute; top: 90px; left:50%; transform:translateX(-50%);
+    font-size:22px; color:#fff2b0; opacity:0; transition:opacity .15s;
+  }
+  #judge-canvas-wrap{
+    position:relative; width:100%; flex:1; display:flex; align-items:center; justify-content:center;
+  }
+  #notes-canvas{ position:absolute; top:0; left:0; }
+  #judge-text{
+    position:absolute; top:38%; left:50%; transform:translate(-50%,-50%);
+    font-size:26px; opacity:0; pointer-events:none;
+  }
+
+  #char-stage{
+    position:absolute; bottom: 26px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; z-index:6;
+  }
+  #char-frame{
+    position:relative;
+    display:flex; align-items:flex-end; justify-content:center;
+  }
+  #char-frame::after{
+    content:'';
+    position:absolute; bottom:2px; left:50%; transform:translateX(-50%);
+    width:120px; height:20px; background:rgba(0,0,0,.4); border-radius:50%;
+    filter:blur(1.5px); z-index:-1;
+  }
+  .char-sprite{
+    height:230px; width:auto;
+    image-rendering: pixelated; image-rendering: -moz-crisp-edges;
+    display:none;
+    filter: drop-shadow(3px 5px 0 rgba(0,0,0,.35));
+  }
+  .char-sprite.active{ display:block; }
+  #char-label{
+    margin-top:8px; font-size:11px; color:#ffd4e8; background:rgba(20,8,40,.6); padding:3px 10px; border:1px solid #ff9fc7;
+  }
+
+  #hit-hint{
+    position:absolute; bottom: 22px; right: 26px; font-size:11px; color:#e6d6ff; opacity:.8; z-index:6; text-align:right; line-height:1.6;
+  }
+
+  /* ---------- RESULT SCREEN ---------- */
+  #result-screen h2{ font-size: clamp(24px,4.5vw,40px); color:#ffe08a; margin-bottom:6px;}
+  #result-grade{ font-size: clamp(48px,10vw,96px); color:#ff9fc7; margin: 10px 0; text-shadow:4px 4px 0 #3a1650;}
+  #result-stats{ font-size:14px; color:#f3d9ee; margin-bottom:18px; text-align:center; line-height:1.8;}
+  #result-screen .char-sprite{ height:240px; margin-bottom: 14px; }
+
+  @media (max-width:480px){
+    #back-link{ font-size:11px; padding:6px 10px; }
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="bg-canvas"></canvas>
+  <a href="minigame.html" id="back-link">← 미니게임</a>
+
+  <!-- START -->
+  <div id="start-screen" class="screen">
+    <h1 class="pixel-text">🎶 굴리아나의 리듬게임 🌸</h1>
+    <p>화면 상단에 원이 나타나면, 링이 안쪽 원과 겹치는 순간<br>
+       <b>스페이스바</b> 또는 <b>마우스 클릭</b>으로 박자를 맞추세요.<br>
+       잘 맞추면 굴리아나가 신나게, 자꾸 놓치면 굴리아나가 슬퍼해요.</p>
+    <button class="btn" id="btn-start-demo">기본 테마곡으로 시작</button>
+    <button class="btn secondary" id="btn-pick-file">내 음악 파일 불러오기</button>
+    <input type="file" id="file-input" accept="audio/*" class="hidden">
+    <div id="file-status"></div>
+    <div class="note-box">
+      ⓘ 유튜브 뮤직 링크의 저작권 있는 음원은 직접 내려받을 수 없어 게임에 포함하지 못했어요.
+      대신 벚꽃 분위기의 오리지널 배경음을 만들어 넣었고, 갖고 계신 mp3 등 오디오 파일을
+      "내 음악 파일 불러오기"로 불러오면 자동으로 박자를 분석해 그 노래로도 플레이할 수 있어요.
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div id="game-screen" class="screen hidden">
+    <div id="hud">
+      <div class="box">SCORE <span id="score-val">0</span></div>
+      <div class="box">COMBO <span id="combo-val">0</span></div>
+    </div>
+    <div id="judge-canvas-wrap">
+      <canvas id="notes-canvas"></canvas>
+      <div id="judge-text" class="pixel-text"></div>
+    </div>
+    <div id="char-stage">
+      <div id="char-frame">
+        <img id="sprite-basic" class="char-sprite active" src="assets/rhythm/frames/basic/f01.png" alt="굴리아나">
+        <img id="sprite-sad" class="char-sprite" src="assets/rhythm/frames/sad/f01.png" alt="굴리아나">
+      </div>
+      <div id="char-label">기본</div>
+    </div>
+    <div id="hit-hint">SPACE 또는 클릭으로 타이밍 맞추기</div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result-screen" class="screen hidden">
+    <h2 class="pixel-text">RESULT</h2>
+    <img id="sprite-cheer" class="char-sprite active" src="assets/rhythm/frames/cheer/f01.png" alt="굴리아나">
+    <div id="result-grade" class="pixel-text">S</div>
+    <div id="result-stats"></div>
+    <button class="btn" id="btn-restart">다시 하기</button>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* =========================================================
+   PIXEL CHERRY-BLOSSOM BACKGROUND
+   ========================================================= */
+const bgCanvas = document.getElementById('bg-canvas');
+const bgCtx = bgCanvas.getContext('2d');
+const LOWW = 192, LOWH = 108;
+const low = document.createElement('canvas');
+low.width = LOWW; low.height = LOWH;
+const lctx = low.getContext('2d');
+
+function resizeCanvases(){
+  bgCanvas.width = window.innerWidth;
+  bgCanvas.height = window.innerHeight;
+  const nc = document.getElementById('notes-canvas');
+  const wrap = document.getElementById('judge-canvas-wrap');
+  if(wrap){
+    nc.width = wrap.clientWidth;
+    nc.height = wrap.clientHeight;
+  }
+}
+window.addEventListener('resize', resizeCanvases);
+
+// petals
+const petals = [];
+for(let i=0;i<46;i++){
+  petals.push({
+    x: Math.random()*LOWW,
+    y: Math.random()*LOWH,
+    v: 0.10+Math.random()*0.22,
+    drift: 0.15+Math.random()*0.3,
+    phase: Math.random()*Math.PI*2,
+    c: Math.random()<0.5 ? '#ffc1dc' : '#ffe3ef'
+  });
+}
+
+function drawTree(px, mirrored){
+  // trunk + canopy blobs, pixel style, in low-res canvas coords
+  lctx.fillStyle = '#241033';
+  const trunkX = mirrored ? LOWW-px : px;
+  lctx.fillRect(trunkX-2, LOWH-30, 4, 30);
+  const blobs = [[-10,-34,14],[4,-40,16],[-18,-24,12],[14,-26,13],[-2,-46,11]];
+  lctx.fillStyle = '#3a1650';
+  blobs.forEach(b=>{
+    const bx = trunkX + (mirrored?-b[0]:b[0]);
+    lctx.fillRect(bx-b[2]/2, LOWH+b[1]-b[2]/2, b[2], b[2]);
+  });
+  lctx.fillStyle = '#ff9fc7';
+  blobs.forEach((b,i)=>{
+    const bx = trunkX + (mirrored?-b[0]:b[0]);
+    const s = b[2]-4;
+    lctx.fillRect(bx-s/2, LOWH+b[1]-s/2-2, s, s);
+  });
+}
+
+function drawBG(t){
+  // sky gradient (manual banding for pixel look)
+  const bands = 10;
+  for(let i=0;i<bands;i++){
+    const f = i/bands;
+    const r = Math.round(20 + f*40);
+    const g = Math.round(6 + f*10);
+    const b = Math.round(45 + f*55);
+    lctx.fillStyle = `rgb(${r},${g},${b})`;
+    lctx.fillRect(0, Math.floor(i*LOWH/bands*0.75), LOWW, Math.ceil(LOWH/bands*0.75)+1);
+  }
+  // moon
+  lctx.fillStyle = '#fff3d6';
+  lctx.fillRect(LOWW-30, 12, 14, 14);
+  lctx.fillStyle = '#f6dca0';
+  lctx.fillRect(LOWW-30, 12, 4, 14);
+
+  // stars
+  lctx.fillStyle = 'rgba(255,255,255,.7)';
+  for(let i=0;i<18;i++){
+    const sx = (i*53 + 17) % LOWW;
+    const sy = (i*29) % 40;
+    if(( Math.sin(t*0.002 + i)+1) > 0.4) lctx.fillRect(sx, sy, 1, 1);
+  }
+
+  // ground
+  lctx.fillStyle = '#1b0e2e';
+  lctx.fillRect(0, LOWH-14, LOWW, 14);
+  lctx.fillStyle = '#2a1743';
+  lctx.fillRect(0, LOWH-14, LOWW, 3);
+
+  drawTree(18, false);
+  drawTree(18, true);
+
+  // falling petals
+  petals.forEach(p=>{
+    p.y += p.v;
+    p.x += Math.sin(t*0.001 + p.phase)*p.drift*0.05;
+    if(p.y > LOWH){ p.y = -2; p.x = Math.random()*LOWW; }
+    lctx.fillStyle = p.c;
+    lctx.fillRect(Math.round(p.x), Math.round(p.y), 2, 2);
+  });
+
+  bgCtx.imageSmoothingEnabled = false;
+  bgCtx.drawImage(low, 0, 0, bgCanvas.width, bgCanvas.height);
+}
+
+function bgLoop(t){
+  drawBG(t);
+  requestAnimationFrame(bgLoop);
+}
+
+/* =========================================================
+   SPRITE HELPERS (individual transparent PNG frames)
+   ========================================================= */
+function frameList(folder, count){
+  const arr = [];
+  for(let i=1;i<=count;i++) arr.push(`assets/rhythm/frames/${folder}/f${String(i).padStart(2,'0')}.png`);
+  return arr;
+}
+const FRAME_LISTS = {
+  basic: frameList('basic', 10),
+  sad:   frameList('sad', 8),
+  cheer: frameList('cheer', 10),
+};
+const IMG_ELS = {
+  basic: document.getElementById('sprite-basic'),
+  sad:   document.getElementById('sprite-sad'),
+  cheer: document.getElementById('sprite-cheer'),
+};
+// warm the browser cache so frame swaps don't flicker mid-game
+Object.values(FRAME_LISTS).flat().forEach(src => { const img = new Image(); img.src = src; });
+
+function setFrame(name, idx){
+  const frames = FRAME_LISTS[name];
+  const i = ((idx % frames.length) + frames.length) % frames.length;
+  IMG_ELS[name].src = frames[i];
+}
+
+/* =========================================================
+   AUDIO ENGINE (original demo theme + custom song loader)
+   ========================================================= */
+let audioCtx = null;
+function ensureAudioCtx(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+// pentatonic scale (A minor pentatonic), Hz
+const SCALE = [220.00, 261.63, 293.66, 329.63, 392.00, 440.00, 523.25];
+// hand-written 32-step melody (scale indices), repeated 3x
+const PATTERN = [0,2,3,4,3,2,0,2, 3,4,5,4,3,2,1,0, 2,3,5,4,3,4,2,0, 3,2,0,2,3,4,3,0];
+
+function buildDemoBeatmap(){
+  const BPM = 100;
+  const beat = 60/BPM;
+  const leadBeats = 2;
+  const notes = [];
+  const reps = 3;
+  for(let r=0;r<reps;r++){
+    for(let i=0;i<PATTERN.length;i++){
+      const t = (leadBeats + r*PATTERN.length + i) * beat;
+      notes.push({ time: t, freq: SCALE[PATTERN[i]] });
+    }
+  }
+  const duration = (leadBeats + reps*PATTERN.length) * beat + 1.2;
+  return { notes, duration, beat };
+}
+
+function scheduleDemoAudio(ctx, startTime, demo){
+  const master = ctx.createGain();
+  master.gain.value = 0.22;
+  master.connect(ctx.destination);
+
+  demo.notes.forEach((n, idx) => {
+    const osc = ctx.createOscillator();
+    osc.type = 'triangle';
+    osc.frequency.value = n.freq;
+    const g = ctx.createGain();
+    const t0 = startTime + n.time;
+    g.gain.setValueAtTime(0, t0);
+    g.gain.linearRampToValueAtTime(0.9, t0 + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.001, t0 + demo.beat*0.9);
+    osc.connect(g); g.connect(master);
+    osc.start(t0);
+    osc.stop(t0 + demo.beat);
+
+    // soft bass every 4th note
+    if(idx % 4 === 0){
+      const bass = ctx.createOscillator();
+      bass.type = 'sine';
+      bass.frequency.value = n.freq/4;
+      const bg = ctx.createGain();
+      bg.gain.setValueAtTime(0, t0);
+      bg.gain.linearRampToValueAtTime(0.5, t0+0.03);
+      bg.gain.exponentialRampToValueAtTime(0.001, t0 + demo.beat*1.8);
+      bass.connect(bg); bg.connect(master);
+      bass.start(t0);
+      bass.stop(t0 + demo.beat*1.8);
+    }
+  });
+}
+
+// ---- custom song: onset/beat detection ----
+function mixToMono(buf){
+  if(buf.numberOfChannels === 1) return buf.getChannelData(0);
+  const a = buf.getChannelData(0), b = buf.getChannelData(1);
+  const out = new Float32Array(a.length);
+  for(let i=0;i<a.length;i++) out[i] = (a[i]+b[i])*0.5;
+  return out;
+}
+
+function detectBeatTimes(buffer){
+  const sr = buffer.sampleRate;
+  const data = mixToMono(buffer);
+  const hop = Math.floor(sr*0.01);
+  const win = Math.floor(sr*0.03);
+  const maxSamples = Math.min(data.length, sr*180); // cap ~3 minutes analysis
+  const energies = [];
+  for(let i=0; i+win < maxSamples; i+=hop){
+    let sum=0;
+    for(let j=0;j<win;j+=4){ const v=data[i+j]; sum += v*v; }
+    energies.push(sum);
+  }
+  const flux = energies.map((e,i)=> i===0?0:Math.max(0, e-energies[i-1]));
+  const N = flux.length;
+  const winSize = 43;
+  const peaks = [];
+  const minGapFrames = 25; // 250ms
+  let lastPeak = -minGapFrames;
+  for(let i=1;i<N-1;i++){
+    const s = Math.max(0,i-winSize), e = Math.min(N,i+winSize);
+    let sum=0; for(let k=s;k<e;k++) sum+=flux[k];
+    const thresh = (sum/(e-s))*1.5 + 1e-6;
+    if(flux[i] > thresh && flux[i] >= flux[i-1] && flux[i] >= flux[i+1] && (i-lastPeak) >= minGapFrames){
+      peaks.push(i*0.01);
+      lastPeak = i;
+    }
+  }
+  let times = peaks;
+  if(times.length < 12){
+    // fallback: fixed grid at 100 BPM across duration
+    const dur = buffer.duration;
+    times = [];
+    for(let t=1.0; t<dur-0.5; t+=0.6) times.push(t);
+  }
+  return times;
+}
+
+/* =========================================================
+   GAME LOGIC
+   ========================================================= */
+const els = {
+  start: document.getElementById('start-screen'),
+  game: document.getElementById('game-screen'),
+  result: document.getElementById('result-screen'),
+  scoreVal: document.getElementById('score-val'),
+  comboVal: document.getElementById('combo-val'),
+  judgeText: document.getElementById('judge-text'),
+  notesCanvas: document.getElementById('notes-canvas'),
+  charLabel: document.getElementById('char-label'),
+  spriteBasic: document.getElementById('sprite-basic'),
+  spriteSad: document.getElementById('sprite-sad'),
+  resultGrade: document.getElementById('result-grade'),
+  resultStats: document.getElementById('result-stats'),
+  fileInput: document.getElementById('file-input'),
+  fileStatus: document.getElementById('file-status'),
+};
+
+const TRAVEL = 1.0;       // seconds ring takes to close in
+const PERFECT_W = 0.09;
+const GOOD_W = 0.20;
+const TARGET_R = 34;
+const START_R = 100;
+
+let state = 'idle';
+let songStartTime = 0;
+let noteQueue = [];       // {time, judged, result}
+let score = 0, combo = 0, maxCombo = 0;
+let perfectCount=0, goodCount=0, missCount=0;
+let recentJudgements = []; // rolling window for basic/sad switching
+let charState = 'basic';
+let lastBeatFrameIndex = -1;
+let gameEndTime = Infinity;
+let rafId = null;
+
+function resetGameVars(){
+  score=0; combo=0; maxCombo=0; perfectCount=0; goodCount=0; missCount=0;
+  recentJudgements = []; charState='basic'; lastBeatFrameIndex=-1;
+  els.scoreVal.textContent = '0';
+  els.comboVal.textContent = '0';
+  setCharState('basic');
+  setFrame('basic', 0);
+}
+
+function setCharState(s){
+  if(s === charState) return;
+  charState = s;
+  els.spriteBasic.classList.toggle('active', s==='basic');
+  els.spriteSad.classList.toggle('active', s==='sad');
+  els.charLabel.textContent = s==='basic' ? '기본' : '슬픔';
+}
+
+function updateCharMood(){
+  const win = recentJudgements.slice(-8);
+  if(win.length < 3) return;
+  const goodRatio = win.filter(r => r !== 'miss').length / win.length;
+  setCharState(goodRatio >= 0.5 ? 'basic' : 'sad');
+}
+
+function judge(delta){
+  const ad = Math.abs(delta);
+  if(ad <= PERFECT_W) return 'perfect';
+  if(ad <= GOOD_W) return 'good';
+  return 'miss';
+}
+
+function applyJudgement(kind){
+  recentJudgements.push(kind);
+  if(kind === 'perfect'){ score += 300 + combo*2; combo++; perfectCount++; }
+  else if(kind === 'good'){ score += 100 + combo; combo++; goodCount++; }
+  else { combo = 0; missCount++; }
+  maxCombo = Math.max(maxCombo, combo);
+  els.scoreVal.textContent = String(score);
+  els.comboVal.textContent = String(combo);
+  updateCharMood();
+  showJudgeText(kind);
+}
+
+function showJudgeText(kind){
+  const map = { perfect: ['PERFECT!', '#ffe08a'], good: ['GOOD', '#a8ffcf'], miss: ['MISS', '#ff8fa3'] };
+  const [txt, color] = map[kind];
+  els.judgeText.textContent = txt;
+  els.judgeText.style.color = color;
+  els.judgeText.style.opacity = '1';
+  clearTimeout(showJudgeText._t);
+  showJudgeText._t = setTimeout(()=>{ els.judgeText.style.opacity='0'; }, 260);
+}
+
+function currentSongTime(){
+  return audioCtx.currentTime - songStartTime;
+}
+
+function tryHit(){
+  if(state !== 'playing') return;
+  const t = currentSongTime();
+  let best = null, bestDelta = Infinity;
+  for(const n of noteQueue){
+    if(n.judged) continue;
+    const d = t - n.time;
+    if(Math.abs(d) < Math.abs(bestDelta) && Math.abs(d) <= GOOD_W + 0.05){
+      best = n; bestDelta = d;
+    }
+  }
+  if(best){
+    best.judged = true;
+    applyJudgement(judge(bestDelta));
+  }
+}
+
+function onKeyDown(e){
+  if(e.code === 'Space'){
+    e.preventDefault();
+    tryHit();
+  }
+}
+function onCanvasClick(){ tryHit(); }
+
+function renderNotes(){
+  const ctx = els.notesCanvas.getContext('2d');
+  const w = els.notesCanvas.width, h = els.notesCanvas.height;
+  ctx.clearRect(0,0,w,h);
+  if(state !== 'playing') return;
+  const cx = w/2, cy = h*0.34;
+  const t = currentSongTime();
+
+  // target ring (always visible)
+  ctx.strokeStyle = '#ffd4e8';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.arc(cx, cy, TARGET_R, 0, Math.PI*2);
+  ctx.stroke();
+
+  for(const n of noteQueue){
+    const untilHit = n.time - t;
+    if(!n.judged && t > n.time + GOOD_W){
+      n.judged = true;
+      applyJudgement('miss');
+    }
+    if(untilHit > TRAVEL || untilHit < -0.3) continue;
+    const progress = 1 - Math.max(0, Math.min(1, untilHit / TRAVEL)); // 0..1
+    const r = START_R - (START_R - TARGET_R)*progress;
+    ctx.strokeStyle = n.judged ? 'rgba(255,159,199,.25)' : '#ff9fc7';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.arc(cx, cy, Math.max(r, TARGET_R), 0, Math.PI*2);
+    ctx.stroke();
+  }
+
+  // step character frame based on how many notes have fully passed (beat clock)
+  let passedCount = 0;
+  for(const n of noteQueue) if(t >= n.time) passedCount++;
+  if(passedCount !== lastBeatFrameIndex && passedCount > 0){
+    lastBeatFrameIndex = passedCount;
+    setFrame(charState, passedCount);
+  }
+}
+
+function gameLoop(){
+  if(state === 'playing'){
+    renderNotes();
+    if(audioCtx.currentTime >= gameEndTime){
+      endGame();
+      return;
+    }
+  }
+  rafId = requestAnimationFrame(gameLoop);
+}
+
+function startGame(notes, duration, startAt){
+  resetGameVars();
+  noteQueue = notes.map(n => ({ time: n.time !== undefined ? n.time : n, judged:false }));
+  songStartTime = startAt;
+  gameEndTime = songStartTime + duration + 1.0;
+  els.start.classList.add('hidden');
+  els.result.classList.add('hidden');
+  els.game.classList.remove('hidden');
+  resizeCanvases();
+  state = 'playing';
+  window.addEventListener('keydown', onKeyDown);
+  els.notesCanvas.addEventListener('click', onCanvasClick);
+  gameLoop();
+}
+
+let cheerInterval = null;
+function endGame(){
+  state = 'result';
+  window.removeEventListener('keydown', onKeyDown);
+  els.notesCanvas.removeEventListener('click', onCanvasClick);
+  els.game.classList.add('hidden');
+  els.result.classList.remove('hidden');
+
+  const total = perfectCount + goodCount + missCount;
+  const acc = total>0 ? ((perfectCount + goodCount*0.5)/total*100) : 0;
+  let grade = 'C';
+  if(acc >= 95) grade = 'S';
+  else if(acc >= 85) grade = 'A';
+  else if(acc >= 70) grade = 'B';
+  els.resultGrade.textContent = grade;
+  els.resultStats.innerHTML =
+    `SCORE ${score} &nbsp;|&nbsp; MAX COMBO ${maxCombo}<br>` +
+    `PERFECT ${perfectCount} · GOOD ${goodCount} · MISS ${missCount} &nbsp;|&nbsp; 정확도 ${acc.toFixed(1)}%`;
+
+  let f = 0;
+  setFrame('cheer', 0);
+  clearInterval(cheerInterval);
+  cheerInterval = setInterval(()=>{
+    f = (f+1) % FRAME_LISTS.cheer.length;
+    setFrame('cheer', f);
+  }, 140);
+}
+
+/* =========================================================
+   UI WIRING
+   ========================================================= */
+document.getElementById('btn-start-demo').addEventListener('click', async () => {
+  ensureAudioCtx();
+  if(audioCtx.state === 'suspended') await audioCtx.resume();
+  const demo = buildDemoBeatmap();
+  const startAt = audioCtx.currentTime + 1.4;
+  scheduleDemoAudio(audioCtx, startAt, demo);
+  startGame(demo.notes, demo.duration, startAt);
+});
+
+document.getElementById('btn-pick-file').addEventListener('click', () => {
+  els.fileInput.click();
+});
+
+els.fileInput.addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  els.fileStatus.textContent = '분석 중... (노래 길이에 따라 몇 초 걸릴 수 있어요)';
+  try{
+    ensureAudioCtx();
+    if(audioCtx.state === 'suspended') await audioCtx.resume();
+    const arrayBuf = await file.arrayBuffer();
+    const audioBuf = await audioCtx.decodeAudioData(arrayBuf);
+    const beatTimes = detectBeatTimes(audioBuf);
+    els.fileStatus.textContent = `${beatTimes.length}개의 박자를 감지했어요. 시작합니다!`;
+
+    const src = audioCtx.createBufferSource();
+    src.buffer = audioBuf;
+    const gain = audioCtx.createGain();
+    gain.gain.value = 0.7;
+    src.connect(gain); gain.connect(audioCtx.destination);
+    const startAt = audioCtx.currentTime + 1.4;
+    src.start(startAt);
+
+    const notes = beatTimes.map(t => ({ time: t }));
+    const duration = Math.min(audioBuf.duration, 180);
+    startGame(notes, duration, startAt);
+  }catch(err){
+    console.error(err);
+    els.fileStatus.textContent = '이 파일은 분석할 수 없었어요. 다른 오디오 파일을 시도해보세요.';
+  }
+});
+
+document.getElementById('btn-restart').addEventListener('click', () => {
+  clearInterval(cheerInterval);
+  els.result.classList.add('hidden');
+  els.start.classList.remove('hidden');
+  els.fileStatus.textContent = '';
+});
+
+/* =========================================================
+   INIT
+   ========================================================= */
+resizeCanvases();
+requestAnimationFrame(bgLoop);
+})();
+</script>
+</body>
+</html>
