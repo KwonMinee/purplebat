@@ -1677,6 +1677,65 @@ a {
   background: var(--purple-soft);
 }
 
+/* ---------- 미니게임 페이지: 실제로 플레이 가능한 게임을 소개하는 배너 카드 ---------- */
+.featured-game-banner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: linear-gradient(135deg, rgba(92, 45, 145, 0.08), rgba(92, 45, 145, 0.02));
+  border: 2px solid var(--purple);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.featured-game-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(92, 45, 145, 0.18);
+}
+.featured-game-thumb {
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 2px solid var(--border);
+}
+.featured-game-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.featured-game-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+.featured-game-info h2 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--text-dark);
+}
+.featured-game-info p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 560px) {
+  .featured-game-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .featured-game-info {
+    align-items: center;
+  }
+}
+
 .archive-card.clickable,
 .minigame-card.clickable,
 .goods-card.clickable {
