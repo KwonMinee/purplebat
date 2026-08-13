@@ -138,8 +138,6 @@ async function initDashboardPage() {
   });
 
   bindAdminForm("form-notices", "/api/admin/notices", loadAll);
-  bindAdminForm("form-goods", "/api/admin/goods", loadAll);
-  bindMinigameForm();
 
   await loadAll();
 }
@@ -245,7 +243,10 @@ async function loadArchive() {
         <td>${escapeHtmlAdmin(a.title)}</td>
         <td>${escapeHtmlAdmin(ARCHIVE_LABEL[a.category] || a.category)}</td>
         <td>${escapeHtmlAdmin(a.date)}</td>
-        <td><button class="btn-danger" data-id="${escapeHtmlAdmin(a.id)}">삭제</button></td>
+        <td>
+          <a class="btn-outline" href="archive.html" style="text-decoration:none;">수정</a>
+          <button class="btn-danger" data-id="${escapeHtmlAdmin(a.id)}">삭제</button>
+        </td>
       </tr>`
         )
         .join("") || `<tr><td colspan="5" class="admin-empty">등록된 아카이브가 없습니다.</td></tr>`;
@@ -273,7 +274,10 @@ async function loadGoods() {
         <td>${escapeHtmlAdmin(g.name)}</td>
         <td>₩ ${Number(g.price).toLocaleString("ko-KR")}</td>
         <td>${escapeHtmlAdmin(GOODS_LABEL[g.category] || g.category)}</td>
-        <td><button class="btn-danger" data-id="${escapeHtmlAdmin(g.id)}">삭제</button></td>
+        <td>
+          <a class="btn-outline" href="goods.html" style="text-decoration:none;">수정</a>
+          <button class="btn-danger" data-id="${escapeHtmlAdmin(g.id)}">삭제</button>
+        </td>
       </tr>`
         )
         .join("") || `<tr><td colspan="5" class="admin-empty">등록된 상품이 없습니다.</td></tr>`;
@@ -343,18 +347,16 @@ async function loadBoard() {
 }
 
 /* ============================================================
-   미니게임 관리 - 추가 / 수정 / 삭제
-   (다른 섹션과 달리 "수정"이 있어서 폼을 add/edit 겸용으로 사용합니다)
+   미니게임 관리 - 목록 조회 / 삭제
+   (등록·수정은 블로그형 글쓰기 도구가 있는 minigame.html에서 합니다)
    ============================================================ */
 const MINIGAME_DIFFICULTY_LABEL = { easy: "쉬움", normal: "보통", hard: "어려움" };
-let minigameCache = [];
 
 async function loadMinigame() {
   const tbody = document.getElementById("table-minigame");
   if (!tbody) return;
   try {
     const list = await API.get("/api/minigame");
-    minigameCache = list;
     tbody.innerHTML =
       list
         .map(
@@ -365,7 +367,7 @@ async function loadMinigame() {
         <td>${escapeHtmlAdmin(MINIGAME_DIFFICULTY_LABEL[g.category] || g.category)}</td>
         <td>${escapeHtmlAdmin(g.highlight || "")}</td>
         <td>
-          <button class="btn-outline" data-edit-id="${escapeHtmlAdmin(g.id)}">수정</button>
+          <a class="btn-outline" href="minigame.html" style="text-decoration:none;">수정</a>
           <button class="btn-danger" data-id="${escapeHtmlAdmin(g.id)}">삭제</button>
         </td>
       </tr>`
@@ -374,66 +376,7 @@ async function loadMinigame() {
     tbody.querySelectorAll("button[data-id]").forEach((btn) => {
       btn.addEventListener("click", () => deleteItem("/api/admin/minigame", btn.dataset.id, loadAll));
     });
-    tbody.querySelectorAll("button[data-edit-id]").forEach((btn) => {
-      btn.addEventListener("click", () => startEditMinigame(btn.dataset.editId));
-    });
   } catch (e) {
     tbody.innerHTML = `<tr><td colspan="5" class="admin-empty">불러오기 실패</td></tr>`;
   }
-}
-
-function startEditMinigame(id) {
-  const item = minigameCache.find((g) => g.id === id);
-  if (!item) return;
-  const form = document.getElementById("form-minigame");
-  if (!form) return;
-  form.elements.editId.value = item.id;
-  form.elements.title.value = item.title || "";
-  form.elements.category.value = item.category || "easy";
-  form.elements.icon.value = item.icon || "";
-  form.elements.highlight.value = item.highlight || "";
-  form.elements.colorFrom.value = item.colorFrom || "#5c2d91";
-  form.elements.colorTo.value = item.colorTo || "#2f1750";
-  form.elements.description.value = item.description || "";
-
-  document.getElementById("minigameSubmitBtn").textContent = "수정 완료";
-  document.getElementById("minigameCancelBtn").style.display = "";
-  form.scrollIntoView({ behavior: "smooth", block: "center" });
-}
-
-function resetMinigameForm() {
-  const form = document.getElementById("form-minigame");
-  if (!form) return;
-  form.reset();
-  form.elements.editId.value = "";
-  document.getElementById("minigameSubmitBtn").textContent = "추가";
-  document.getElementById("minigameCancelBtn").style.display = "none";
-}
-
-function bindMinigameForm() {
-  const form = document.getElementById("form-minigame");
-  if (!form) return;
-
-  document.getElementById("minigameCancelBtn").addEventListener("click", resetMinigameForm);
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(form).entries());
-    const editId = data.editId;
-    delete data.editId;
-
-    try {
-      if (editId) {
-        await API.put(`/api/admin/minigame/${editId}`, data);
-        showToastAdmin("수정되었습니다.", false);
-      } else {
-        await API.post("/api/admin/minigame", data);
-        showToastAdmin("추가되었습니다.", false);
-      }
-      resetMinigameForm();
-      await loadAll();
-    } catch (err) {
-      showToastAdmin(err.message || "저장에 실패했습니다.", true);
-    }
-  });
 }

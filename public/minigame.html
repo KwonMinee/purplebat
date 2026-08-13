@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@1,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/admin.css" />
 </head>
 <body>
 
@@ -54,7 +55,87 @@
       <p>가볍게 즐겨보세요!</p>
     </section>
 
-    
+    <div class="admin-tools-panel" id="minigameAdminTools" style="display:none;">
+      <div class="admin-tools-title">⚙️ 관리자 도구 (로그인한 관리자에게만 보여요)</div>
+
+      <details id="newMinigameDetails">
+        <summary style="cursor:pointer;font-weight:700;font-size:13px;color:var(--text-dark);">📝 새 게임 등록</summary>
+        <form id="newMinigameForm" class="write-form" style="margin-top:12px;">
+          <input type="hidden" id="editingMinigameId" value="" />
+          <div class="write-field-row">
+            <input type="text" name="title" id="minigameTitleInput" placeholder="게임 이름을 입력하세요" required class="write-title-input" style="border-bottom:2px solid var(--border);font-size:18px;padding:8px 4px;" />
+          </div>
+          <div class="write-field-row">
+            <select name="category" id="minigameCategoryInput" class="write-category-select" required>
+              <option value="easy">쉬움</option>
+              <option value="normal">보통</option>
+              <option value="hard">어려움</option>
+            </select>
+            <input type="text" name="icon" id="minigameIconInput" class="write-author-input" placeholder="아이콘 이모지 (예: 🎮)" maxlength="4" style="flex:0 1 140px;min-width:100px;" />
+            <input type="text" name="highlight" id="minigameHighlightInput" class="write-author-input" placeholder="뱃지 문구 (예: 최고 기록 9,999점)" />
+            <input type="text" name="author" id="minigameAuthorInput" class="write-author-input" placeholder="작성자 (비워두면 '운영팀')" />
+          </div>
+          <div class="write-field-row">
+            <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);">그라디언트 시작색
+              <input type="color" name="colorFrom" id="minigameColorFromInput" value="#5c2d91" />
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);">그라디언트 끝색
+              <input type="color" name="colorTo" id="minigameColorToInput" value="#2f1750" />
+            </label>
+          </div>
+
+          <div class="rt-root" id="minigamePostEditorRoot">
+            <div class="rt-toolbar editor-toolbar">
+              <button type="button" data-cmd="bold" title="굵게"><b>B</b></button>
+              <button type="button" data-cmd="italic" title="기울임"><i>I</i></button>
+              <button type="button" data-cmd="underline" title="밑줄"><u>U</u></button>
+              <button type="button" data-cmd="strikeThrough" title="취소선"><s>S</s></button>
+              <span class="toolbar-divider"></span>
+              <select class="rt-font-family" title="글꼴">
+                <option value="">글꼴 선택</option>
+                <option value="'Manrope', sans-serif">Manrope</option>
+                <option value="'Bricolage Grotesque', sans-serif">Bricolage</option>
+                <option value="'Cormorant Garamond', serif">Cormorant</option>
+                <option value="Georgia, serif">Georgia</option>
+                <option value="Arial, sans-serif">Arial</option>
+                <option value="'Courier New', monospace">Courier</option>
+              </select>
+              <select class="rt-font-size" title="글자 크기">
+                <option value="">크기 선택</option>
+                <option value="13px">작게</option>
+                <option value="16px">보통</option>
+                <option value="20px">크게</option>
+                <option value="28px">아주 크게</option>
+              </select>
+              <input type="color" class="rt-color" title="글자 색" value="#2b2130" />
+              <span class="toolbar-divider"></span>
+              <button type="button" data-cmd="justifyLeft" title="왼쪽 정렬">≡⬅</button>
+              <button type="button" data-cmd="justifyCenter" title="가운데 정렬">≡↔</button>
+              <button type="button" data-cmd="justifyRight" title="오른쪽 정렬">≡➡</button>
+              <span class="toolbar-divider"></span>
+              <button type="button" data-cmd="insertUnorderedList" title="글머리 목록">• 목록</button>
+              <button type="button" data-cmd="insertOrderedList" title="번호 목록">1. 목록</button>
+              <button type="button" data-cmd="formatBlockQuote" title="인용구">❝인용❞</button>
+              <button type="button" data-cmd="insertHorizontalRule" title="구분선">―구분선</button>
+              <span class="toolbar-divider"></span>
+              <button type="button" class="rt-insert-link" title="링크 삽입">🔗 링크</button>
+              <button type="button" class="rt-insert-image" title="사진 삽입">🖼️ 사진</button>
+              <button type="button" class="rt-insert-video" title="영상 삽입">🎬 영상</button>
+              <span class="toolbar-divider"></span>
+              <button type="button" data-cmd="undo" title="실행 취소">↶</button>
+              <button type="button" data-cmd="redo" title="다시 실행">↷</button>
+            </div>
+            <input type="file" class="rt-image-input" accept="image/*" style="display:none;" />
+            <div class="rt-body editor-body" contenteditable="true" data-placeholder="게임 소개, 조작법, 스크린샷이나 플레이 영상을 자유롭게 적어보세요..."></div>
+          </div>
+
+          <div class="write-footer-actions">
+            <button type="button" class="btn-outline" id="cancelMinigameEditBtn" style="display:none;">취소</button>
+            <button type="submit" class="btn btn-primary" id="minigameSubmitBtn">게시하기</button>
+          </div>
+        </form>
+      </details>
+    </div>
 
     <section class="grid-full cols-3" id="gameGrid">
       <!--<div class="minigame-card" data-category="easy">
@@ -151,8 +232,23 @@
   </div>
 </footer>
 
+<div class="modal-overlay" id="minigamePostModal">
+  <div class="modal-box">
+    <button class="modal-close" id="minigameModalCloseBtn" aria-label="닫기">✕</button>
+    <h3 id="minigameModalTitle"></h3>
+    <div class="modal-meta"><span id="minigameModalAuthor"></span><span id="minigameModalDate"></span><span id="minigameModalViews"></span></div>
+    <div class="modal-body-text post-content" id="minigameModalContent"></div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn-outline" id="minigameModalEditBtn" style="display:none;">✏️ 수정</button>
+      <button class="btn-danger" id="minigameModalDeleteBtn" style="display:none;">🗑️ 이 게임 삭제</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 <script src="js/api.js"></script>
 <script src="js/script.js"></script>
+<script src="js/rich-editor.js"></script>
+<script src="js/minigame.js"></script>
 </body>
 </html>

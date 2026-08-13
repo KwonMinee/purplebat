@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@1,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/admin.css" />
 </head>
 <body>
 
@@ -55,6 +56,81 @@
       <div class="page-hero-stats">
       </div>
     </section>
+
+    <div class="admin-tools-panel" id="goodsAdminTools" style="display:none;">
+      <div class="admin-tools-title">⚙️ 관리자 도구 (로그인한 관리자에게만 보여요)</div>
+
+      <details id="newGoodsDetails">
+        <summary style="cursor:pointer;font-weight:700;font-size:13px;color:var(--text-dark);">📝 새 상품 등록</summary>
+        <form id="newGoodsForm" class="write-form" style="margin-top:12px;">
+          <input type="hidden" id="editingGoodsId" value="" />
+          <div class="write-field-row">
+            <input type="text" name="name" id="goodsNameInput" placeholder="상품명을 입력하세요" required class="write-title-input" style="border-bottom:2px solid var(--border);font-size:18px;padding:8px 4px;" />
+          </div>
+          <div class="write-field-row">
+            <select name="category" id="goodsCategoryInput" class="write-category-select" required>
+              <option value="badge">뱃지/키링</option>
+              <option value="figure">스탠드/피규어</option>
+              <option value="stationery">문구</option>
+              <option value="living">리빙</option>
+            </select>
+            <input type="number" name="price" id="goodsPriceInput" class="write-author-input" placeholder="가격 (예: 12000)" min="1" required style="flex:0 1 160px;min-width:120px;" />
+            <input type="text" name="author" id="goodsAuthorInput" class="write-author-input" placeholder="작성자 (비워두면 '운영팀')" />
+            <input type="text" name="image" id="goodsImageInput" class="write-author-input" placeholder="대표 이미지 경로 (비워두면 본문 첫 사진 사용)" />
+          </div>
+
+          <div class="rt-root" id="goodsPostEditorRoot">
+            <div class="rt-toolbar editor-toolbar">
+              <button type="button" data-cmd="bold" title="굵게"><b>B</b></button>
+              <button type="button" data-cmd="italic" title="기울임"><i>I</i></button>
+              <button type="button" data-cmd="underline" title="밑줄"><u>U</u></button>
+              <button type="button" data-cmd="strikeThrough" title="취소선"><s>S</s></button>
+              <span class="toolbar-divider"></span>
+              <select class="rt-font-family" title="글꼴">
+                <option value="">글꼴 선택</option>
+                <option value="'Manrope', sans-serif">Manrope</option>
+                <option value="'Bricolage Grotesque', sans-serif">Bricolage</option>
+                <option value="'Cormorant Garamond', serif">Cormorant</option>
+                <option value="Georgia, serif">Georgia</option>
+                <option value="Arial, sans-serif">Arial</option>
+                <option value="'Courier New', monospace">Courier</option>
+              </select>
+              <select class="rt-font-size" title="글자 크기">
+                <option value="">크기 선택</option>
+                <option value="13px">작게</option>
+                <option value="16px">보통</option>
+                <option value="20px">크게</option>
+                <option value="28px">아주 크게</option>
+              </select>
+              <input type="color" class="rt-color" title="글자 색" value="#2b2130" />
+              <span class="toolbar-divider"></span>
+              <button type="button" data-cmd="justifyLeft" title="왼쪽 정렬">≡⬅</button>
+              <button type="button" data-cmd="justifyCenter" title="가운데 정렬">≡↔</button>
+              <button type="button" data-cmd="justifyRight" title="오른쪽 정렬">≡➡</button>
+              <span class="toolbar-divider"></span>
+              <button type="button" data-cmd="insertUnorderedList" title="글머리 목록">• 목록</button>
+              <button type="button" data-cmd="insertOrderedList" title="번호 목록">1. 목록</button>
+              <button type="button" data-cmd="formatBlockQuote" title="인용구">❝인용❞</button>
+              <button type="button" data-cmd="insertHorizontalRule" title="구분선">―구분선</button>
+              <span class="toolbar-divider"></span>
+              <button type="button" class="rt-insert-link" title="링크 삽입">🔗 링크</button>
+              <button type="button" class="rt-insert-image" title="사진 삽입">🖼️ 사진</button>
+              <button type="button" class="rt-insert-video" title="영상 삽입">🎬 영상</button>
+              <span class="toolbar-divider"></span>
+              <button type="button" data-cmd="undo" title="실행 취소">↶</button>
+              <button type="button" data-cmd="redo" title="다시 실행">↷</button>
+            </div>
+            <input type="file" class="rt-image-input" accept="image/*" style="display:none;" />
+            <div class="rt-body editor-body" contenteditable="true" data-placeholder="상품 소개, 구성품, 사이즈, 사진이나 영상을 자유롭게 적어보세요..."></div>
+          </div>
+
+          <div class="write-footer-actions">
+            <button type="button" class="btn-outline" id="cancelGoodsEditBtn" style="display:none;">취소</button>
+            <button type="submit" class="btn btn-primary" id="goodsSubmitBtn">게시하기</button>
+          </div>
+        </form>
+      </details>
+    </div>
 
     <div class="filter-tabs" id="goodsFilters">
       <button class="filter-tab active" data-filter="all">전체</button>
@@ -146,8 +222,24 @@
   </div>
 </footer>
 
+<div class="modal-overlay" id="goodsPostModal">
+  <div class="modal-box">
+    <button class="modal-close" id="goodsModalCloseBtn" aria-label="닫기">✕</button>
+    <h3 id="goodsModalTitle"></h3>
+    <div class="modal-meta"><span id="goodsModalAuthor"></span><span id="goodsModalDate"></span><span id="goodsModalViews"></span></div>
+    <div class="modal-body-text post-content" id="goodsModalContent"></div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn-outline add-cart-btn" id="goodsModalAddCartBtn"></button>
+      <button class="btn-outline" id="goodsModalEditBtn" style="display:none;">✏️ 수정</button>
+      <button class="btn-danger" id="goodsModalDeleteBtn" style="display:none;">🗑️ 이 상품 삭제</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 <script src="js/api.js"></script>
 <script src="js/script.js"></script>
+<script src="js/rich-editor.js"></script>
+<script src="js/goods.js"></script>
 </body>
 </html>

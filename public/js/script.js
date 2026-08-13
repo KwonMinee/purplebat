@@ -387,7 +387,7 @@ const GOODS_CATEGORY_LABEL = { badge: "뱃지/키링", figure: "스탠드/피규
 
 function goodsCardHtml(item) {
   return `
-    <div class="goods-card" data-category="${escapeHtml(item.category)}" data-id="${escapeHtml(item.id)}">
+    <div class="goods-card clickable" data-category="${escapeHtml(item.category)}" data-id="${escapeHtml(item.id)}">
       <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" />
       <div class="goods-card-name">${escapeHtml(item.name)}</div>
       <div class="goods-card-price">₩ ${Number(item.price).toLocaleString("ko-KR")}</div>
@@ -456,7 +456,7 @@ function minigameCardHtml(item) {
   const colorFrom = item.colorFrom || "#5c2d91";
   const colorTo = item.colorTo || "#2f1750";
   return `
-    <div class="minigame-card" data-category="${escapeHtml(item.category)}" data-id="${escapeHtml(item.id)}">
+    <div class="minigame-card clickable" data-category="${escapeHtml(item.category)}" data-id="${escapeHtml(item.id)}">
       <div class="minigame-icon" style="background:linear-gradient(135deg,${escapeHtml(colorFrom)},${escapeHtml(colorTo)});">${escapeHtml(item.icon || "🎮")}</div>
       <h3>${escapeHtml(item.title)}</h3>
       <p class="desc">${escapeHtml(item.description)}</p>

@@ -59,6 +59,21 @@ router.get("/goods", async (req, res) => {
   }
 });
 
+// 굿즈 상세 (조회수 +1). 로그인 없이 누구나 볼 수 있습니다.
+router.get("/goods/:id", async (req, res) => {
+  try {
+    const list = await store.read("goods");
+    const idx = list.findIndex((g) => g.id === req.params.id);
+    if (idx === -1) return res.status(404).json({ error: "상품을 찾을 수 없습니다." });
+
+    list[idx].views = (list[idx].views || 0) + 1;
+    await store.write("goods", list);
+    res.json(list[idx]);
+  } catch (err) {
+    res.status(500).json({ error: "데이터베이스 연결에 실패했습니다.", detail: err.message });
+  }
+});
+
 router.get("/guestbook", async (req, res) => {
   try {
     res.json(await store.read("guestbook"));
@@ -95,6 +110,21 @@ router.get("/minigame", async (req, res) => {
     const { category } = req.query;
     const list = await store.read("minigame");
     res.json(category && category !== "all" ? list.filter((g) => g.category === category) : list);
+  } catch (err) {
+    res.status(500).json({ error: "데이터베이스 연결에 실패했습니다.", detail: err.message });
+  }
+});
+
+// 미니게임 상세 (조회수 +1). 로그인 없이 누구나 볼 수 있습니다.
+router.get("/minigame/:id", async (req, res) => {
+  try {
+    const list = await store.read("minigame");
+    const idx = list.findIndex((g) => g.id === req.params.id);
+    if (idx === -1) return res.status(404).json({ error: "게임을 찾을 수 없습니다." });
+
+    list[idx].views = (list[idx].views || 0) + 1;
+    await store.write("minigame", list);
+    res.json(list[idx]);
   } catch (err) {
     res.status(500).json({ error: "데이터베이스 연결에 실패했습니다.", detail: err.message });
   }

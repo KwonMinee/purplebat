@@ -69,20 +69,8 @@
     <!-- 굿즈샵 -->
     <section class="admin-section" id="panel-goods">
       <h2>굿즈샵 관리</h2>
-      <form class="admin-inline-form" id="form-goods">
-        <div class="field">상품명<input type="text" name="name" placeholder="상품명" required /></div>
-        <div class="field">가격<input type="number" name="price" placeholder="12000" min="1" required /></div>
-        <div class="field">카테고리
-          <select name="category">
-            <option value="badge">뱃지/키링</option>
-            <option value="figure">스탠드/피규어</option>
-            <option value="stationery">문구</option>
-            <option value="living">리빙</option>
-          </select>
-        </div>
-        <div class="field">이미지 경로<input type="text" name="image" placeholder="assets/goods-pin.png" /></div>
-        <button type="submit" class="btn btn-primary">추가</button>
-      </form>
+      <p class="admin-hint" style="text-align:left;">사진·링크·영상을 넣을 수 있는 블로그형 글쓰기 도구는 굿즈샵 페이지에 있습니다.</p>
+      <a href="goods.html" class="btn btn-primary" style="display:inline-flex;width:fit-content;">✍️ 새 상품 등록하러 가기</a>
       <table class="admin-table">
         <thead><tr><th>이미지</th><th>상품명</th><th>가격</th><th>카테고리</th><th></th></tr></thead>
         <tbody id="table-goods"></tbody>
@@ -113,25 +101,8 @@
     <!-- 미니게임 -->
     <section class="admin-section" id="panel-minigame">
       <h2>미니게임 관리</h2>
-      <p class="admin-hint" style="text-align:left;">목록에서 "수정"을 누르면 아래 폼에 내용이 채워집니다. 수정을 마치려면 "수정 완료"를, 취소하려면 "취소"를 눌러주세요.</p>
-      <form class="admin-inline-form" id="form-minigame">
-        <input type="hidden" name="editId" value="" />
-        <div class="field">게임 이름<input type="text" name="title" placeholder="예: 슬라임 퇴치 작전" required /></div>
-        <div class="field">난이도
-          <select name="category">
-            <option value="easy">쉬움</option>
-            <option value="normal">보통</option>
-            <option value="hard">어려움</option>
-          </select>
-        </div>
-        <div class="field">아이콘(이모지)<input type="text" name="icon" placeholder="🎮" maxlength="4" /></div>
-        <div class="field">뱃지 문구<input type="text" name="highlight" placeholder="예: 최고 기록 9,999점" /></div>
-        <div class="field">그라디언트 시작색<input type="color" name="colorFrom" value="#5c2d91" /></div>
-        <div class="field">그라디언트 끝색<input type="color" name="colorTo" value="#2f1750" /></div>
-        <div class="field" style="flex:2 1 260px;">설명<input type="text" name="description" placeholder="게임 소개 문구" /></div>
-        <button type="submit" class="btn btn-primary" id="minigameSubmitBtn">추가</button>
-        <button type="button" class="btn-outline" id="minigameCancelBtn" style="display:none;">취소</button>
-      </form>
+      <p class="admin-hint" style="text-align:left;">사진·링크·영상을 넣을 수 있는 블로그형 글쓰기 도구는 미니게임 페이지에 있습니다.</p>
+      <a href="minigame.html" class="btn btn-primary" style="display:inline-flex;width:fit-content;">✍️ 새 게임 등록하러 가기</a>
       <table class="admin-table">
         <thead><tr><th>아이콘</th><th>게임 이름</th><th>난이도</th><th>뱃지 문구</th><th></th></tr></thead>
         <tbody id="table-minigame"></tbody>
