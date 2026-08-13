@@ -1,7 +1,7 @@
 [
   {
     "id": "argon",
-    "name": "아르곤",
+    "name": "로완",
     "role": "블랙 드래곤본 팔라딘",
     "level": 35,
     "image": "assets/char-argon.png",
@@ -27,7 +27,7 @@
   },
   {
     "id": "elia",
-    "name": "엘리아",
+    "name": "콕슨",
     "role": "하프엘프 남자 위자드",
     "level": 30,
     "image": "assets/char-elia.png",
@@ -40,7 +40,7 @@
   },
   {
     "id": "leon",
-    "name": "리온",
+    "name": "굴리아나",
     "role": "인간 여자 바드",
     "level": 28,
     "image": "assets/char-leon.png",
@@ -53,7 +53,7 @@
   },
   {
     "id": "jedrik",
-    "name": "제드릭",
+    "name": "루스",
     "role": "골드 드래곤본 로그",
     "level": 34,
     "image": "assets/char-jedrik.png",

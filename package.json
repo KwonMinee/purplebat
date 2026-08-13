@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "reset-example-data": "node scripts/reset-example-data.js"
+    "reset-example-data": "node scripts/reset-example-data.js",
+    "rename-characters": "node scripts/rename-characters.js"
   },
   "engines": {
     "node": ">=16.0.0"
